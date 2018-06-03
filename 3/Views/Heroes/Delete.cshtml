@@ -1,0 +1,168 @@
+﻿@model ClassLibrary.Entities.Hero
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Hero</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MHP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MHP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AHP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AHP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MMP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MMP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AMP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AMP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lvl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lvl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Exp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Str)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Str)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Int)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Int)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Spd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Spd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinDmg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinDmg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxDmg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxDmg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhysRes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhysRes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Class)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Class)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Race)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Race)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxPockets)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxPockets)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Profiles.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profiles.UserName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

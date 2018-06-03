@@ -1,0 +1,190 @@
+﻿@model ClassLibrary.Entities.Hero
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Hero</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MHP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MHP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AHP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AHP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MMP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MMP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AMP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AMP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lvl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lvl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Exp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Str)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Str)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Int)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Int)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Spd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Spd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinDmg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinDmg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxDmg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxDmg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhysRes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhysRes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Class)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Class)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Race)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Race)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxPockets)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxPockets)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Profiles.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profiles.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pockets)
+        </dt>
+        <dd>
+            @Model.Pockets.Count()
+            <table class="table">
+                <tr>
+                    <th>Pocket ID</th>
+                    <th>Item ID</th>
+                    <th>Quantity</th>
+                </tr>
+                @foreach (var pocket in Model.Pockets)
+                {
+                    <tr>
+                        <td>
+                            @pocket.ID
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => pocket.ItemID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => pocket.Quantity)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
