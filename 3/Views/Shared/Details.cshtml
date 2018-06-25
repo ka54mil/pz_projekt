@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>
+        @ViewBag.ModelName
+    </h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        @Html.Partial("DetailsPartials/_PreDetails")
+        @Html.Partial("DetailsPartials/_Details",
+            new ViewDataDictionary {
+                { "ExcludedFields", ViewBag.ExcludedFields },
+                { "Properties", ViewData.ModelMetadata.Properties }
+            })
+        @Html.Partial("DetailsPartials/_PostDetails")
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

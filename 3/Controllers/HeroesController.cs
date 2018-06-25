@@ -8,22 +8,30 @@ using System.Web;
 using System.Web.Mvc;
 using ClassLibrary.Entities;
 using _3.DAL;
+using System.Reflection;
+using _3.Helpers;
+using _3.Models;
+using PagedList;
 
 namespace _3.Controllers
 {
     public class HeroesController : Controller
     {
         private MyDbContext db = new MyDbContext();
+        readonly string[] ExcludedFields = new string[] { "Profiles", "Pockets", "Effects" };
 
         // GET: Heroes
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, HeroSearchModel searchModel, string sortProperty = "ID")
         {
-            var Hero = db.Hero.Include(h => h.Profiles);
-            return View(Hero.ToList());
+            var Heroes = db.Hero.Include(h => h.Profiles).ToList();
+            Heroes = Heroes.SortByProperty(sortOrder, sortProperty).SearchByProperties(searchModel);
+            ViewBag.searchModel = searchModel;
+            ViewBag.properties = typeof(Hero).GetProperties().Where(p => Array.IndexOf(ExcludedFields, p.Name) == -1).ToList();
+            return View(Heroes);
         }
 
         // GET: Heroes/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string sortOrder, string sortProperty = "ID")
         {
             if (id == null)
             {
@@ -34,6 +42,9 @@ namespace _3.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ExcludedFields = ExcludedFields;
+            ViewBag.ModelName = "Hero";
+            hero.Pockets = hero.Pockets.ToList().SortByProperty(sortOrder, sortProperty);
             return View(hero);
         }
 
@@ -49,7 +60,7 @@ namespace _3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,MHP,AHP,MMP,AMP,Lvl,Exp,Str,Dex,Sta,Int,Spd,MinDmg,MaxDmg,PhysRes,Class,Race,MaxPockets,ProfileID")] Hero hero)
+        public ActionResult Create([Bind(Include = "ID,Name,MHP,AHP,MMP,AMP,Lvl,Exp,Str,Dex,Sta,Int,Spd,MinDmg,MaxDmg,PhysRes,Class,Race,MaxPockets,ProfileID")] Hero hero)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +94,7 @@ namespace _3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,MHP,AHP,MMP,AMP,Lvl,Exp,Str,Dex,Sta,Int,Spd,MinDmg,MaxDmg,PhysRes,Class,Race,MaxPockets,ProfileID")] Hero hero)
+        public ActionResult Edit([Bind(Include = "ID,Name,MHP,AHP,MMP,AMP,Lvl,Exp,Str,Dex,Sta,Int,Spd,MinDmg,MaxDmg,PhysRes,Class,Race,MaxPockets,ProfileID")] Hero hero)
         {
             if (ModelState.IsValid)
             {
@@ -107,6 +118,9 @@ namespace _3.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ExcludedFields = ExcludedFields;
+            ViewBag.ModelName = "Hero";
             return View(hero);
         }
 

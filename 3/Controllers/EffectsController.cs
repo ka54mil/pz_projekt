@@ -33,6 +33,8 @@ namespace _3.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ForbiddenFields = new string[] { };
+            ViewBag.Controller = "Effect";
             return View(effect);
         }
 

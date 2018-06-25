@@ -1,0 +1,15 @@
+﻿@model ClassLibrary.Entities.Hero
+@using ClassLibrary.Entities
+
+@{ 
+    string [] ExcludedFields = { "BeingID", "Being", "Item" };
+    var pocketsProperties = typeof(Pocket).GetProperties().Where(p => Array.IndexOf(ExcludedFields, p.Name) == -1).ToList();
+}
+
+<dt>
+    @Html.DisplayNameFor(model => model.Pockets)
+</dt>
+<dd>
+    @Model.Pockets.Count()
+    @Html.Partial("IndexPartials/_List", new ViewDataDictionary { { "list", Model.Pockets }, { "properties", pocketsProperties }, { "controller", "Pockets" } })
+</dd>

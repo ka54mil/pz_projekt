@@ -1,0 +1,9 @@
+﻿@model IEnumerable<ClassLibrary.Entities.Hero>
+
+<th>
+    @Html.ActionLink(
+        @Html.DisplayNameFor(model => model.Profiles.UserName).ToHtmlString(),
+        "Index",
+        new { sortOrder = ViewBag.NextSortOrder, sortProperty = "Profiles" }
+    )
+</th>

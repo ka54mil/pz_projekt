@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -134,6 +135,12 @@
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -255,10 +262,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ListHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\HeroSearchModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MeViewModels.cs" />
+    <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -269,6 +279,7 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -356,32 +367,40 @@
     </Content>
     <Content Include="Views\Profiles\Create.cshtml" />
     <Content Include="Views\Profiles\Delete.cshtml" />
-    <Content Include="Views\Profiles\Details.cshtml" />
     <Content Include="Views\Profiles\Edit.cshtml" />
     <Content Include="Views\Profiles\Index.cshtml" />
     <Content Include="Views\Effects\Create.cshtml" />
-    <Content Include="Views\Effects\Delete.cshtml" />
-    <Content Include="Views\Effects\Details.cshtml" />
+    <Content Include="Views\Shared\Delete.cshtml" />
     <Content Include="Views\Effects\Edit.cshtml" />
     <Content Include="Views\Effects\Index.cshtml" />
     <Content Include="Views\Items\Create.cshtml" />
     <Content Include="Views\Items\Delete.cshtml" />
-    <Content Include="Views\Items\Details.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Items\Index.cshtml" />
     <Content Include="Views\Pockets\Create.cshtml" />
     <Content Include="Views\Pockets\Delete.cshtml" />
-    <Content Include="Views\Pockets\Details.cshtml" />
     <Content Include="Views\Pockets\Edit.cshtml" />
     <Content Include="Views\Pockets\Index.cshtml" />
-    <Content Include="Views\Heroes\Create.cshtml" />
-    <Content Include="Views\Heroes\Delete.cshtml" />
-    <Content Include="Views\Heroes\Details.cshtml" />
-    <Content Include="Views\Heroes\Edit.cshtml" />
-    <Content Include="Views\Heroes\Index.cshtml" />
+    <Content Include="Views\Shared\Details.cshtml" />
+    <Content Include="Views\Shared\DetailsPartials\_PreDetails.cshtml" />
+    <Content Include="Views\Shared\DetailsPartials\_PostDetails.cshtml" />
+    <Content Include="Views\Heroes\DetailsPartials\_PostDetails.cshtml" />
+    <Content Include="Views\Shared\Index.cshtml" />
+    <Content Include="Views\Shared\IndexPartials\_PreTableBody.cshtml" />
+    <Content Include="Views\Shared\IndexPartials\_PreTableHeader.cshtml" />
+    <Content Include="Views\Heroes\IndexPartials\_PreTableBody.cshtml" />
+    <Content Include="Views\Heroes\IndexPartials\_PreTableHeader.cshtml" />
+    <Content Include="Views\Shared\Form.cshtml" />
+    <Content Include="Views\Shared\Create.cshtml" />
+    <Content Include="Views\Shared\Edit.cshtml" />
+    <Content Include="Views\Heroes\Form.cshtml" />
+    <Content Include="Views\Shared\IndexPartials\_List.cshtml" />
+    <Content Include="Views\Shared\DetailsPartials\_Details.cshtml" />
+    <Content Include="Views\Shared\IndexPartials\_FilterForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\My\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

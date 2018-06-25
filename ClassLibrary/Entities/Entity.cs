@@ -15,7 +15,7 @@ namespace ClassLibrary.Entities
             PropertyInfo[] properties = this.GetType().GetProperties();
             foreach (PropertyInfo property in properties)
             {
-                sb.Append($"{property.Name}: {property.GetRawConstantValue()}\n");
+                sb.Append($"{property.Name}: {property.GetValue(this)}\n");
             }
 
             return sb.ToString();

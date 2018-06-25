@@ -34,13 +34,15 @@ namespace _3.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ForbiddenFields = new string[] { };
+            ViewBag.Controller = "Pocket";
             return View(pocket);
         }
 
         // GET: Pockets/Create
         public ActionResult Create()
         {
-            ViewBag.HeroID = new SelectList(db.Hero, "ID", "ID");
+            ViewBag.BeingID = new SelectList(db.Hero, "ID", "ID");
             ViewBag.ItemID = new SelectList(db.Item, "ID", "ID");
             return View();
         }
@@ -59,7 +61,7 @@ namespace _3.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.HeroID = new SelectList(db.Hero, "ID", "ID", pocket.BeingID);
+            ViewBag.BeingID = new SelectList(db.Hero, "ID", "ID", pocket.BeingID);
             ViewBag.ItemID = new SelectList(db.Item, "ID", "ID", pocket.ItemID);
             return View(pocket);
         }
@@ -76,7 +78,7 @@ namespace _3.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.HeroID = new SelectList(db.Hero, "ID", "ID", pocket.BeingID);
+            ViewBag.BeingID = new SelectList(db.Hero, "ID", "ID", pocket.BeingID);
             ViewBag.ItemID = new SelectList(db.Item, "ID", "ID", pocket.ItemID);
             return View(pocket);
         }
@@ -94,7 +96,7 @@ namespace _3.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.HeroID = new SelectList(db.Hero, "ID", "ID", pocket.BeingID);
+            ViewBag.BeingID = new SelectList(db.Hero, "ID", "ID", pocket.BeingID);
             ViewBag.ItemID = new SelectList(db.Item, "ID", "ID", pocket.ItemID);
             return View(pocket);
         }

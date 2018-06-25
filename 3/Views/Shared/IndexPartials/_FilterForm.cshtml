@@ -1,0 +1,13 @@
+﻿@using _3.Models
+
+@{
+    SearchModel searchModel = ViewBag.searchModel;
+}
+
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.EditorFor(model => searchModel)
+        <input type="submit" value="Search" />
+    </p>
+}

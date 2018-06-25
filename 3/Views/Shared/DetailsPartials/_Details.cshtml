@@ -1,0 +1,20 @@
+﻿@{ 
+    var properties = (IEnumerable<dynamic>)ViewData["Properties"];
+    var ExcludedFields = (ViewData["ExcludedFields"] as string[]) ?? new string[] { };
+}
+
+@foreach (var property in properties)
+{
+    if (Array.IndexOf(ExcludedFields, property.PropertyName) == -1)
+    {
+        String name = property.DisplayName ?? property.PropertyName;
+        <dt>
+            @name
+        </dt>
+        var value = property.Model + "";
+        <dd>
+            @Html.DisplayFor(modelItem => value)
+        </dd>
+    }
+
+}

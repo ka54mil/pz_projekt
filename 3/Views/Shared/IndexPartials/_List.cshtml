@@ -1,0 +1,55 @@
+﻿@using System.ComponentModel.DataAnnotations
+
+@{
+    var properties = (IEnumerable<dynamic>)ViewData["properties"];
+    var list = (IEnumerable<dynamic>)ViewData["list"];
+    string controller = ViewData["controller"] as string ?? ViewContext.RouteData.GetRequiredString("controller");
+}
+<table class="table">
+    <tr>
+        @Html.Partial("IndexPartials/_PreTableHeader")
+
+        @foreach (var property in properties)
+        {
+            var displayAttribute = ((IEnumerable<dynamic>)property.GetCustomAttributes(typeof(DisplayAttribute), false)).FirstOrDefault() as DisplayAttribute;
+            String name = property.Name;
+            if (displayAttribute != null)
+            {
+                name = displayAttribute.Name ?? property.Name;
+            }
+            string order = "";
+            if (property.Name.Equals(Request.Params["sortProperty"]) && !"desc".Equals(Request.Params["sortOrder"]))
+            {
+                order = "desc";
+            }
+            <th>
+                @Html.ActionLink(
+                    name,
+                    ViewContext.RouteData.GetRequiredString("action"),
+                    new { sortOrder = order, sortProperty = property.Name }
+                )
+            </th>
+        }
+        <th></th>
+    </tr>
+
+    @foreach (var item in list)
+    {
+        <tr>
+            @Html.Partial("IndexPartials/_PreTableBody", new ViewDataDictionary { { "item", item } })
+            @foreach (var property in ViewBag.properties)
+            {
+                var value = property.GetValue(item) + "";
+                <td>
+                    @Html.DisplayFor(modelItem => value)
+                </td>
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", controller, new { id = item.ID }, null) |
+                @Html.ActionLink("Details", "Details", controller, new { id = item.ID }, null) |
+                @Html.ActionLink("Delete", "Delete", controller, new { id = item.ID }, null)
+            </td>
+        </tr>
+    }
+
+</table>

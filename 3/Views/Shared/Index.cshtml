@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@Html.Partial("IndexPartials/_FilterForm")
+@Html.Partial("IndexPartials/_List", new ViewDataDictionary { { "list", Model }, { "properties", ViewBag.properties } })

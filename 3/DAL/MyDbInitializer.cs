@@ -23,8 +23,8 @@ namespace _3.DAL
 
             roleManager.Create(new IdentityRole("Admin"));
 
-            var user = new ApplicationUser { UserName = "Cos2@Cos.Cos" };
-            string password = "CosCos1!";
+            var user = new ApplicationUser { UserName = "Cos@Cos.Cos" };
+            string password = "CosCos";
             userManager.Create(user, password);
             userManager.AddToRole(user.Id, "Admin");
             context.Profile.Add(new Profile { UserName = user.UserName });
