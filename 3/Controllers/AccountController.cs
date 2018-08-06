@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using _3.Models;
+using _3.Helpers;
 
 namespace _3.Controllers
 {
@@ -174,7 +175,7 @@ namespace _3.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    MailHelper.SendMail("ka54mil@wp.pl", "Registration", "Hello there.");
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

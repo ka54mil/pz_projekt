@@ -1,4 +1,7 @@
-﻿
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<ClassLibrary.Entities.Entity>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 @{
     ViewBag.Title = "List";
 }
@@ -11,3 +14,9 @@
 
 @Html.Partial("IndexPartials/_FilterForm")
 @Html.Partial("IndexPartials/_List", new ViewDataDictionary { { "list", Model }, { "properties", ViewBag.properties } })
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortProperty = ViewBag.sortProperty, sortOrder = ViewBag.sortOrder }))

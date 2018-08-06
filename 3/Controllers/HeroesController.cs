@@ -15,19 +15,24 @@ using PagedList;
 
 namespace _3.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class HeroesController : Controller
     {
         private MyDbContext db = new MyDbContext();
         readonly string[] ExcludedFields = new string[] { "Profiles", "Pockets", "Effects" };
 
         // GET: Heroes
-        public ActionResult Index(string sortOrder, HeroSearchModel searchModel, string sortProperty = "ID")
+        public ActionResult Index(string sortOrder, HeroSearchModel searchModel,int? page, string sortProperty = "ID")
         {
             var Heroes = db.Hero.Include(h => h.Profiles).ToList();
             Heroes = Heroes.SortByProperty(sortOrder, sortProperty).SearchByProperties(searchModel);
             ViewBag.searchModel = searchModel;
+            ViewBag.sortOrder = sortOrder;
+            ViewBag.sortProperty = sortProperty;
             ViewBag.properties = typeof(Hero).GetProperties().Where(p => Array.IndexOf(ExcludedFields, p.Name) == -1).ToList();
-            return View(Heroes);
+            int pageSize = 1;
+            int pageNumber = (page ?? 1);
+            return View(Heroes.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Heroes/Details/5

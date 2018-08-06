@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link runat="server" rel="shortcut icon" href="@_3.ViewModels.SiteModel.getLogoIconFolder()@_3.ViewModels.SiteModel.getLogoIcon()" type="image/x-icon" />
+    <link runat="server" rel="icon" href="@_3.ViewModels.SiteModel.getLogoIconFolder()@_3.ViewModels.SiteModel.getLogoIcon()" type="image/ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")

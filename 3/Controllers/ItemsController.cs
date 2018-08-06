@@ -11,6 +11,7 @@ using _3.DAL;
 
 namespace _3.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ItemsController : Controller
     {
         private MyDbContext db = new MyDbContext();

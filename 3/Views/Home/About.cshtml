@@ -1,0 +1,30 @@
+﻿@model IEnumerable<_3.ViewModels.HeroesLevels>
+
+@{
+    ViewBag.Title = "Heroes levels Statistics";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table>
+    <tr>
+        <th>
+            Level
+        </th>
+        <th>
+            Count
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lvl)
+            </td>
+            <td>
+                @item.Count
+            </td>
+        </tr>
+    }
+</table>
