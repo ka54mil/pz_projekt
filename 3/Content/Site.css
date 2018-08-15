@@ -33,3 +33,7 @@ textarea {
         padding: 10px 15px;
     }
 }
+
+.rounded-3 {
+    border-radius: 0.75rem !important;
+}

@@ -7,53 +7,47 @@
 <h2>ChooseCharacter</h2>
 
 <div class="container">
-
-    <div>
-        <a href="@Url.Action("CreateCharacter", "GamePlay")" class="text-light">
-            <div class="row">
-                <div class="col-xs-12">
-                    Create new character
-                </div>
+    <div class="bg-dark mt-2 col-lg-8 col-md-10 col-12 rounded-3">
+        <a href="@Url.Action("CreateCharacter", "GamePlay")" class="text-light row p-2">
+            <div><i class="fa fa-plus"></i></div>
+            <div class="col-11">
+                Create new character
             </div>
         </a>
     </div>
     @foreach (var item in Model)
     {
-        <div class="bg-dark mt-2">
-            <a href="@Url.Action("Play", "GamePlay", new { hero = item})" class="text-light">
-                <div class="col-12">
-                    <div class="row pl-2">
-                        <div class="col-md-2 col-4 row">
-                            <div>
-                                @Html.DisplayNameFor(modelItem => modelItem.Lvl):
-                            </div>
-                            <div class="ml-1">
-                                @Html.DisplayFor(modelItem => item.Lvl)
-                            </div>
-                        </div>
-                        <div class="ml-3">
-                            @Html.DisplayNameFor(modelItem => modelItem.Name):
+        <div class="bg-dark mt-2 col-lg-8 col-md-10 col-12 rounded-3">
+            <a href="@Url.Action("Play", "GamePlay", new { id = item.ID})" class="text-light">
+                <div class="col-12 p-2">
+                    <div class="row">
+                        <div>
+                            @Html.DisplayNameFor(modelItem => modelItem.Lvl):
                         </div>
                         <div class="ml-1">
-                            @Html.DisplayFor(modelItem => item.Name)
+                            @Html.DisplayFor(modelItem => item.Lvl)
                         </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="row pl-2">
-                        <div class="col-md-2 col-4 row">
-                            <div>
-                                @Html.DisplayNameFor(modelItem => modelItem.Class):
-                            </div>
-                            <div class="ml-1">
-                                @Html.DisplayFor(modelItem => item.Class)
-                            </div>
+                        <div class="ml-3">
+                            @Html.DisplayNameFor(modelItem => modelItem.Class):
+                        </div>
+                        <div class="ml-1">
+                            @Html.DisplayFor(modelItem => item.Class)
                         </div>
                         <div class="ml-3">
                             @Html.DisplayNameFor(modelItem => modelItem.Race):
                         </div>
                         <div class="ml-1">
                             @Html.DisplayFor(modelItem => item.Race)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 p-2">
+                    <div class="row">
+                        <div>
+                            @Html.DisplayNameFor(modelItem => modelItem.Name):
+                        </div>
+                        <div class="ml-1">
+                            @Html.DisplayFor(modelItem => item.Name)
                         </div>
                     </div>
                 </div>

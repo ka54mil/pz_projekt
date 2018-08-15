@@ -27,8 +27,9 @@ namespace _3.Controllers
             return View(Heroes);
         }
 
-        public ActionResult Play(Hero hero)
+        public ActionResult Play(int id)
         {
+            Hero hero = db.Hero.Find(id);
             return View(hero);
         }
 
