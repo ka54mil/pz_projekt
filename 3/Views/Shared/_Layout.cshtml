@@ -9,29 +9,25 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body class="bg-secondary">
+    <nav class="navbar bg-dark navbar-dark navbar-expand-sm">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("The 3", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <div class="navbar-brand">
+                @Html.ActionLink("The 3", "ChooseCharacter", "GamePlay", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Heroes", "Index", "Heroes", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Profiles", "Index", "Profiles", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Pockets", "Index", "Pockets", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Items", "Index", "Items", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Effects", "Index", "Effects", new { area = "" }, null)</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+            <ul class="nav navbar-nav">
+                @if (User.IsInRole("Admin"))
+                {
+                    <li>@Html.ActionLink("Heroes", "Index", "Heroes", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Profiles", "Index", "Profiles", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Pockets", "Index", "Pockets", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Items", "Index", "Items", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Effects", "Index", "Effects", new { area = "" }, new { @class = "nav-link" })</li>
+                }
+            </ul>
+            @Html.Partial("_LoginPartial")
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         @RenderSection("SPAViews", required: false)

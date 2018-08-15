@@ -12,10 +12,8 @@ using _3.DAL;
 namespace _3.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class ProfilesController : Controller
+    public class ProfilesController : DefaultController
     {
-        private MyDbContext db = new MyDbContext();
-
         // GET: Profiles
         public ActionResult Index()
         {
@@ -117,15 +115,6 @@ namespace _3.Controllers
             db.Profile.Remove(profile);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

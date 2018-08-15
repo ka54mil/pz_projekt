@@ -9,9 +9,8 @@ using _3.ViewModels;
 namespace _3.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : DefaultController
     {
-        private MyDbContext db = new MyDbContext();
         public ActionResult Index()
         {
             return View();
@@ -37,12 +36,6 @@ namespace _3.Controllers
                 file.SaveAs(HttpContext.Server.MapPath(SiteModel.getLogoIconFolder())+ SiteModel.getLogoIcon());
             }
             return View(new SiteModel());
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

@@ -1,0 +1,102 @@
+﻿@model ClassLibrary.Entities.Hero
+
+<div>
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AHP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AHP)/@Html.DisplayFor(model => model.MHP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AMP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AMP)/@Html.DisplayFor(model => model.MMP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lvl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lvl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Exp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Str)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Str)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Int)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Int)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Spd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Spd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinDmg) - @Html.DisplayNameFor(model => model.MaxDmg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinDmg) - @Html.DisplayFor(model => model.MaxDmg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhysRes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhysRes)
+        </dd>
+    </dl>
+</div>

@@ -15,16 +15,15 @@ using PagedList;
 
 namespace _3.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class HeroesController : Controller
+    //[Authorize(Roles = "Admin")]
+    public class HeroesController : DefaultController
     {
-        private MyDbContext db = new MyDbContext();
-        readonly string[] ExcludedFields = new string[] { "Profiles", "Pockets", "Effects" };
+        readonly string[] ExcludedFields = new string[] { "Profile", "Pockets", "Effects" };
 
         // GET: Heroes
         public ActionResult Index(string sortOrder, HeroSearchModel searchModel,int? page, string sortProperty = "ID")
         {
-            var Heroes = db.Hero.Include(h => h.Profiles).ToList();
+            var Heroes = db.Hero.Include(h => h.Profile).ToList();
             Heroes = Heroes.SortByProperty(sortOrder, sortProperty).SearchByProperties(searchModel);
             ViewBag.searchModel = searchModel;
             ViewBag.sortOrder = sortOrder;
@@ -138,15 +137,6 @@ namespace _3.Controllers
             db.Hero.Remove(hero);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

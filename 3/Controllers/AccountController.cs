@@ -14,7 +14,7 @@ using _3.Helpers;
 namespace _3.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : DefaultController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -170,12 +170,14 @@ namespace _3.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                    db.Profile.Add(new ClassLibrary.Entities.Profile{ UserName = model.Email });
+                    db.SaveChanges();
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    MailHelper.SendMail("ka54mil@wp.pl", "Registration", "Hello there.");
+                    //MailHelper.SendMail("ka54mil@wp.pl", "Registration", "Hello there.");
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

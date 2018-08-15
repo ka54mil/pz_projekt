@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ClassLibrary.Entities.Hero>
+
+@{
+    ViewBag.Title = "ChooseCharacter";
+}
+
+<h2>ChooseCharacter</h2>
+
+<div class="container">
+
+    <div>
+        <a href="@Url.Action("CreateCharacter", "GamePlay")" class="text-light">
+            <div class="row">
+                <div class="col-xs-12">
+                    Create new character
+                </div>
+            </div>
+        </a>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="bg-dark mt-2">
+            <a href="@Url.Action("Play", "GamePlay", new { hero = item})" class="text-light">
+                <div class="col-12">
+                    <div class="row pl-2">
+                        <div class="col-md-2 col-4 row">
+                            <div>
+                                @Html.DisplayNameFor(modelItem => modelItem.Lvl):
+                            </div>
+                            <div class="ml-1">
+                                @Html.DisplayFor(modelItem => item.Lvl)
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            @Html.DisplayNameFor(modelItem => modelItem.Name):
+                        </div>
+                        <div class="ml-1">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row pl-2">
+                        <div class="col-md-2 col-4 row">
+                            <div>
+                                @Html.DisplayNameFor(modelItem => modelItem.Class):
+                            </div>
+                            <div class="ml-1">
+                                @Html.DisplayFor(modelItem => item.Class)
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            @Html.DisplayNameFor(modelItem => modelItem.Race):
+                        </div>
+                        <div class="ml-1">
+                            @Html.DisplayFor(modelItem => item.Race)
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+
+</div>

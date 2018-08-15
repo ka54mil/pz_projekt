@@ -1,7 +1,9 @@
 ﻿using ClassLibrary.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Linq;
 using System.Web;
 
@@ -20,6 +22,9 @@ namespace _3.DAL
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Hero>()
+                .Property(h => h.Name)
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute { IsUnique = true }));
             base.OnModelCreating(modelBuilder);
         }
     }
