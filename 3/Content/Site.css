@@ -37,3 +37,11 @@ textarea {
 .rounded-3 {
     border-radius: 0.75rem !important;
 }
+
+.type-action {
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid black;
+    max-width: 100%;
+    width: 100%;
+}

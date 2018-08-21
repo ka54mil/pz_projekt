@@ -110,13 +110,13 @@ namespace ClassLibrary.Entities
                 Sta++;
                 MHP += 4;
             } else if (Race == Race.Elf) {
-                MMP += 4;
+                MMP += 2;
                 MHP += 2;
                 Int++;
                 Dex++;
             } else if (Race == Race.Human) {
-                MMP += 2;
-                MHP += 2;
+                MMP += 1;
+                MHP += 3;
                 Int++;
                 Str++;
                 Sta++;
@@ -124,31 +124,31 @@ namespace ClassLibrary.Entities
 
             if (Class == Class.Warrior)
             {
-                MHP += 3;
-                MMP += 2;
+                MHP += 4;
+                MMP += 1;
                 Str++;
-                MinDmg += Str;
-                MaxDmg += Str + Str / 4;
+                MinDmg += Str/2;
+                MaxDmg += MinDmg + Str / 4;
             }
             else if (Class == Class.Archer)
             {
-                MHP += 2;
-                MMP += 3;
+                MHP += 3;
+                MMP += 2;
                 Dex++;
-                MinDmg += Dex;
-                MaxDmg += Dex + Dex/4;
+                MinDmg += Dex/2;
+                MaxDmg += MinDmg + Dex/4;
             }
             else if (Class == Class.Mage)
             {
-                MHP += 1;
-                MMP += 4;
+                MHP += 2;
+                MMP += 3;
                 Int++;
-                MinDmg += Int;
-                MaxDmg += Int + Int/4;
+                MinDmg += Int/2;
+                MaxDmg += MinDmg + Int/4;
             }
             PhysRes = (Sta) / 3;
             MHP += Sta * 3;
-            MMP += Int * 3;
+            MMP += Int;
             AHP = MHP;
             AMP = MMP;
         }

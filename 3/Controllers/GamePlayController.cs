@@ -27,8 +27,12 @@ namespace _3.Controllers
             return View(Heroes);
         }
 
-        public ActionResult Play(int id)
+        public ActionResult Play(int? id)
         {
+            if(id == null)
+            {
+                return RedirectToAction("ChooseCharacter");
+            }
             Hero hero = db.Hero.Find(id);
             return View(hero);
         }
