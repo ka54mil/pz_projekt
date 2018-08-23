@@ -7,15 +7,16 @@ using System.Configuration;
 
 namespace ClassLibrary.Entities
 {
-    public class Being : Entity
+    public partial class Being : Entity
     {
-        private const int maxValue = int.MaxValue;
+        protected const int maxValue = int.MaxValue;
 
         [Display(Name = "ID")]
         public int ID { get; set; }
 
         [RegularExpression(@"^[a-zA-Z0-9 ]*", ErrorMessage = "Only numbers, spaces and letters are allowed")]
         [Display(Name = "Name")]
+        [Required]
         [StringLength(30,ErrorMessage = "The {0} must be at least {2} and at most {1} characters long.", MinimumLength = 4)]
         public String Name { get; set; }
 
@@ -86,11 +87,19 @@ namespace ClassLibrary.Entities
         [Display(Name = "Max pockets")]
         public int MaxPockets { get; set; }
 
+        [Range(0, maxValue, ErrorMessage = "Only positive number allowed")]
+        [Display(Name = "Experience to level up")]
+        public int ExpToLvlUp { get; set; }
+
         public virtual ICollection<Effect> Effects { get; set; }
 
         public virtual ICollection<Pocket> Pockets { get; set; }
 
-        public void InitializeStats()
+        public Being()
+        {
+            InitializeStats();
+        }
+        public virtual void InitializeStats()
         {
             Str = 1;
             Dex = 1;
@@ -103,54 +112,7 @@ namespace ClassLibrary.Entities
             MaxDmg = 1;
             MinDmg = 1;
             PhysRes = 0;
-
-            if (Race == Race.Beast) {
-                Str++;
-                Spd++;
-                Sta++;
-                MHP += 4;
-            } else if (Race == Race.Elf) {
-                MMP += 2;
-                MHP += 2;
-                Int++;
-                Dex++;
-            } else if (Race == Race.Human) {
-                MMP += 1;
-                MHP += 3;
-                Int++;
-                Str++;
-                Sta++;
-            }
-
-            if (Class == Class.Warrior)
-            {
-                MHP += 4;
-                MMP += 1;
-                Str++;
-                MinDmg += Str/2;
-                MaxDmg += MinDmg + Str / 4;
-            }
-            else if (Class == Class.Archer)
-            {
-                MHP += 3;
-                MMP += 2;
-                Dex++;
-                MinDmg += Dex/2;
-                MaxDmg += MinDmg + Dex/4;
-            }
-            else if (Class == Class.Mage)
-            {
-                MHP += 2;
-                MMP += 3;
-                Int++;
-                MinDmg += Int/2;
-                MaxDmg += MinDmg + Int/4;
-            }
-            PhysRes = (Sta) / 3;
-            MHP += Sta * 3;
-            MMP += Int;
-            AHP = MHP;
-            AMP = MMP;
+            RecalculateLvlBasedStats();
         }
     }
 

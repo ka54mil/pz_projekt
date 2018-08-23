@@ -20,6 +20,7 @@ input,
 select,
 textarea {
     max-width: 280px;
+    color: rgba(255, 255, 255, 0.6) !important;
 }
 
 /* Set padding to display errors that occur during databinding */
@@ -44,4 +45,19 @@ textarea {
     border-bottom: 1px solid black;
     max-width: 100%;
     width: 100%;
+}
+
+a, button:focus{
+    outline: none;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 30px;
+}
+
+.text-danger {
+    color:#8c0f0f !important
 }

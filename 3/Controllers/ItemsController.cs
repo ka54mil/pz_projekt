@@ -18,7 +18,7 @@ namespace _3.Controllers
         // GET: Items
         public ActionResult Index()
         {
-            return View(db.Item.ToList());
+            return View(Db.Item.ToList());
         }
 
         // GET: Items/Details/5
@@ -28,7 +28,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Item.Find(id);
+            Item item = Db.Item.Find(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -53,8 +53,8 @@ namespace _3.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Item.Add(item);
-                db.SaveChanges();
+                Db.Item.Add(item);
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -68,7 +68,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Item.Find(id);
+            Item item = Db.Item.Find(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -85,8 +85,8 @@ namespace _3.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(item).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(item).State = EntityState.Modified;
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(item);
@@ -99,7 +99,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Item.Find(id);
+            Item item = Db.Item.Find(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -112,9 +112,9 @@ namespace _3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Item item = db.Item.Find(id);
-            db.Item.Remove(item);
-            db.SaveChanges();
+            Item item = Db.Item.Find(id);
+            Db.Item.Remove(item);
+            Db.SaveChanges();
             return RedirectToAction("Index");
         }
         

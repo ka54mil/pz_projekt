@@ -18,7 +18,7 @@ namespace _3.Controllers
 
         public ActionResult About()
         {
-            IQueryable<HeroesLevels> data = from Hero in db.Hero
+            IQueryable<HeroesLevels> data = from Hero in Db.Hero
                                                    group Hero by Hero.Lvl into LvlGroup
                                                    select new HeroesLevels()
                                                    {

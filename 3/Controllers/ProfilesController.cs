@@ -17,7 +17,7 @@ namespace _3.Controllers
         // GET: Profiles
         public ActionResult Index()
         {
-            return View(db.Profile.ToList());
+            return View(Db.Profile.ToList());
         }
 
         // GET: Profiles/Details/5
@@ -27,7 +27,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Profile profile = db.Profile.Find(id);
+            Profile profile = Db.Profile.Find(id);
             if (profile == null)
             {
                 return HttpNotFound();
@@ -52,8 +52,8 @@ namespace _3.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Profile.Add(profile);
-                db.SaveChanges();
+                Db.Profile.Add(profile);
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -67,7 +67,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Profile profile = db.Profile.Find(id);
+            Profile profile = Db.Profile.Find(id);
             if (profile == null)
             {
                 return HttpNotFound();
@@ -84,8 +84,8 @@ namespace _3.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(profile).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(profile).State = EntityState.Modified;
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(profile);
@@ -98,7 +98,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Profile profile = db.Profile.Find(id);
+            Profile profile = Db.Profile.Find(id);
             if (profile == null)
             {
                 return HttpNotFound();
@@ -111,9 +111,9 @@ namespace _3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Profile profile = db.Profile.Find(id);
-            db.Profile.Remove(profile);
-            db.SaveChanges();
+            Profile profile = Db.Profile.Find(id);
+            Db.Profile.Remove(profile);
+            Db.SaveChanges();
             return RedirectToAction("Index");
         }
     }

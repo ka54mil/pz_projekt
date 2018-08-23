@@ -8,7 +8,7 @@
 
 <div class="container">
     <div class="bg-dark mt-2 col-lg-8 col-md-10 col-12 rounded-3">
-        <a href="@Url.Action("CreateCharacter", "GamePlay")" class="text-light row p-2">
+        <a href="@Url.Action("CreateCharacter", "Gameplay")" class="text-light row p-2">
             <div><i class="fa fa-plus"></i></div>
             <div class="col-11">
                 Create new character
@@ -17,8 +17,8 @@
     </div>
     @foreach (var item in Model)
     {
-        <div class="bg-dark mt-2 col-lg-8 col-md-10 col-12 rounded-3">
-            <a href="@Url.Action("Play", "GamePlay", new { id = item.ID})" class="text-light">
+        <div id="character-@item.ID" class="bg-dark mt-2 col-lg-8 col-md-10 col-12 rounded-3">
+            <a href="@Url.Action("Play", "Gameplay", new { id = item.ID})" class="text-light">
                 <div class="col-12 p-2">
                     <div class="row">
                         <div>
@@ -52,7 +52,31 @@
                     </div>
                 </div>
             </a>
+            <button type="button" data-toggle="modal" data-target="#confirm-delete-character" aria-label="Do not delete"
+                    data-href="@Url.Action("DeleteCharacter", "Gameplay")" data-id="@item.ID"
+                    class="close btn shadow-none delete-button text-secondary">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     }
-
+    <div class="modal" id="confirm-delete-character" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-body text-light">
+                    Are you sure to delete Character?
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Confirm delete character">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="confirm-modal" class="btn btn-danger" data-dismiss="modal" aria-label="Confirm delete character">Delete</button>
+                    <button type="button" class="btn btn-secondary text-dark" data-dismiss="modal" aria-label="Do not delete">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/scripts/Gameplay.js")
+}

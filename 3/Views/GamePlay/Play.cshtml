@@ -1,5 +1,6 @@
 ﻿@model ClassLibrary.Entities.Hero
-
+    
+@Html.HiddenFor(model => model.ID)
 <div class="row">
     <div class="col-lg-4 mt-2 pr-0 col-md-5">
         <div class="card bg-secondary card-success">
@@ -27,3 +28,6 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @Scripts.Render("~/Scripts/scripts/Gameplay.js")
+}

@@ -17,7 +17,7 @@ namespace _3.Controllers
         // GET: Effects
         public ActionResult Index()
         {
-            return View(db.Effect.ToList());
+            return View(Db.Effect.ToList());
         }
 
         // GET: Effects/Details/5
@@ -27,7 +27,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Effect effect = db.Effect.Find(id);
+            Effect effect = Db.Effect.Find(id);
             if (effect == null)
             {
                 return HttpNotFound();
@@ -52,8 +52,8 @@ namespace _3.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Effect.Add(effect);
-                db.SaveChanges();
+                Db.Effect.Add(effect);
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -67,7 +67,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Effect effect = db.Effect.Find(id);
+            Effect effect = Db.Effect.Find(id);
             if (effect == null)
             {
                 return HttpNotFound();
@@ -84,8 +84,8 @@ namespace _3.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(effect).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(effect).State = EntityState.Modified;
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(effect);
@@ -98,7 +98,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Effect effect = db.Effect.Find(id);
+            Effect effect = Db.Effect.Find(id);
             if (effect == null)
             {
                 return HttpNotFound();
@@ -111,9 +111,9 @@ namespace _3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Effect effect = db.Effect.Find(id);
-            db.Effect.Remove(effect);
-            db.SaveChanges();
+            Effect effect = Db.Effect.Find(id);
+            Db.Effect.Remove(effect);
+            Db.SaveChanges();
             return RedirectToAction("Index");
         }
     }

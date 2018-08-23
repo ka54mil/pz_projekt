@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClassLibrary.Generators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +10,14 @@ namespace ClassLibrary.Entities
     public class World : Entity
     {
         public List<Location> Locations { get; set; } = new List<Location>();
-        internal void AddLocation(string name, int x, int y,string description)
+
+        internal Location AddLocation(Location location)
         {
-            Location location = new Location {X=x, Y=y, Name=name, Description=description };
             Locations.Add(location);
+            return location;
         }
 
-        public Location LocationAt(int x, int y)
+        internal Location LocationAt(int x, int y)
         {
             foreach (Location l in Locations)
             {
@@ -24,8 +26,8 @@ namespace ClassLibrary.Entities
                     return l;
                 }
             }
-
-            return null;
+            
+            return WorldGenerator.CreateLocationAt(this, x, y);
         }
     }
 }

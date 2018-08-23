@@ -17,7 +17,7 @@ namespace _3.Controllers
         // GET: Pockets
         public ActionResult Index()
         {
-            var pocket = db.Pocket.Include(p => p.Being).Include(p => p.Item);
+            var pocket = Db.Pocket.Include(p => p.Being).Include(p => p.Item);
             return View(pocket.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pocket pocket = db.Pocket.Find(id);
+            Pocket pocket = Db.Pocket.Find(id);
             if (pocket == null)
             {
                 return HttpNotFound();
@@ -41,8 +41,8 @@ namespace _3.Controllers
         // GET: Pockets/Create
         public ActionResult Create()
         {
-            ViewBag.BeingID = new SelectList(db.Hero, "ID", "ID");
-            ViewBag.ItemID = new SelectList(db.Item, "ID", "ID");
+            ViewBag.BeingID = new SelectList(Db.Hero, "ID", "ID");
+            ViewBag.ItemID = new SelectList(Db.Item, "ID", "ID");
             return View();
         }
 
@@ -55,13 +55,13 @@ namespace _3.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Pocket.Add(pocket);
-                db.SaveChanges();
+                Db.Pocket.Add(pocket);
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BeingID = new SelectList(db.Hero, "ID", "ID", pocket.BeingID);
-            ViewBag.ItemID = new SelectList(db.Item, "ID", "ID", pocket.ItemID);
+            ViewBag.BeingID = new SelectList(Db.Hero, "ID", "ID", pocket.BeingID);
+            ViewBag.ItemID = new SelectList(Db.Item, "ID", "ID", pocket.ItemID);
             return View(pocket);
         }
 
@@ -72,13 +72,13 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pocket pocket = db.Pocket.Find(id);
+            Pocket pocket = Db.Pocket.Find(id);
             if (pocket == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.BeingID = new SelectList(db.Hero, "ID", "ID", pocket.BeingID);
-            ViewBag.ItemID = new SelectList(db.Item, "ID", "ID", pocket.ItemID);
+            ViewBag.BeingID = new SelectList(Db.Hero, "ID", "ID", pocket.BeingID);
+            ViewBag.ItemID = new SelectList(Db.Item, "ID", "ID", pocket.ItemID);
             return View(pocket);
         }
 
@@ -91,12 +91,12 @@ namespace _3.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(pocket).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(pocket).State = EntityState.Modified;
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BeingID = new SelectList(db.Hero, "ID", "ID", pocket.BeingID);
-            ViewBag.ItemID = new SelectList(db.Item, "ID", "ID", pocket.ItemID);
+            ViewBag.BeingID = new SelectList(Db.Hero, "ID", "ID", pocket.BeingID);
+            ViewBag.ItemID = new SelectList(Db.Item, "ID", "ID", pocket.ItemID);
             return View(pocket);
         }
 
@@ -107,7 +107,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pocket pocket = db.Pocket.Find(id);
+            Pocket pocket = Db.Pocket.Find(id);
             if (pocket == null)
             {
                 return HttpNotFound();
@@ -120,9 +120,9 @@ namespace _3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Pocket pocket = db.Pocket.Find(id);
-            db.Pocket.Remove(pocket);
-            db.SaveChanges();
+            Pocket pocket = Db.Pocket.Find(id);
+            Db.Pocket.Remove(pocket);
+            Db.SaveChanges();
             return RedirectToAction("Index");
         }
     }

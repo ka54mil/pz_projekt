@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace ClassLibrary.Entities
 {
@@ -15,6 +16,7 @@ namespace ClassLibrary.Entities
         [Display(Name = "Profile ID")]
         public int ProfileID { get; set; }
 
+        [JsonIgnore]
         public virtual Profile Profile { get; set; }
    
         [Display(Name = "Created at")]
@@ -22,5 +24,6 @@ namespace ClassLibrary.Entities
 
         [Display(Name = "Last time played")]
         public DateTime? LastPlayedAt { get; set; }
+        
     }
 }

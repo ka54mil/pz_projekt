@@ -23,7 +23,7 @@ namespace _3.Controllers
         // GET: Heroes
         public ActionResult Index(string sortOrder, HeroSearchModel searchModel,int? page, string sortProperty = "ID")
         {
-            var Heroes = db.Hero.Include(h => h.Profile).ToList();
+            var Heroes = Db.Hero.Include(h => h.Profile).ToList();
             Heroes = Heroes.SortByProperty(sortOrder, sortProperty).SearchByProperties(searchModel);
             ViewBag.searchModel = searchModel;
             ViewBag.sortOrder = sortOrder;
@@ -41,7 +41,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Hero hero = db.Hero.Find(id);
+            Hero hero = Db.Hero.Find(id);
             if (hero == null)
             {
                 return HttpNotFound();
@@ -55,7 +55,7 @@ namespace _3.Controllers
         // GET: Heroes/Create
         public ActionResult Create()
         {
-            ViewBag.ProfileID = new SelectList(db.Profile, "ID", "UserName");
+            ViewBag.ProfileID = new SelectList(Db.Profile, "ID", "UserName");
             return View();
         }
 
@@ -68,12 +68,12 @@ namespace _3.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Hero.Add(hero);
-                db.SaveChanges();
+                Db.Hero.Add(hero);
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ProfileID = new SelectList(db.Profile, "ID", "UserName", hero.ProfileID);
+            ViewBag.ProfileID = new SelectList(Db.Profile, "ID", "UserName", hero.ProfileID);
             return View(hero);
         }
 
@@ -84,12 +84,12 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Hero hero = db.Hero.Find(id);
+            Hero hero = Db.Hero.Find(id);
             if (hero == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ProfileID = new SelectList(db.Profile, "ID", "UserName", hero.ProfileID);
+            ViewBag.ProfileID = new SelectList(Db.Profile, "ID", "UserName", hero.ProfileID);
             return View(hero);
         }
 
@@ -102,11 +102,11 @@ namespace _3.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(hero).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(hero).State = EntityState.Modified;
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProfileID = new SelectList(db.Profile, "ID", "UserName", hero.ProfileID);
+            ViewBag.ProfileID = new SelectList(Db.Profile, "ID", "UserName", hero.ProfileID);
             return View(hero);
         }
 
@@ -117,7 +117,7 @@ namespace _3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Hero hero = db.Hero.Find(id);
+            Hero hero = Db.Hero.Find(id);
             if (hero == null)
             {
                 return HttpNotFound();
@@ -133,9 +133,9 @@ namespace _3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Hero hero = db.Hero.Find(id);
-            db.Hero.Remove(hero);
-            db.SaveChanges();
+            Hero hero = Db.Hero.Find(id);
+            Db.Hero.Remove(hero);
+            Db.SaveChanges();
             return RedirectToAction("Index");
         }
     }
