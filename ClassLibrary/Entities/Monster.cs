@@ -8,6 +8,10 @@ namespace ClassLibrary.Entities
     public class Monster : Being
     {
         public int EncounterChance { get; set; }
+        public Monster()
+        {
+
+        }
 
         public override void InitializeStats()
         {
@@ -18,10 +22,8 @@ namespace ClassLibrary.Entities
             Sta += 1;
             MaxPockets += 5;
             Lvl += 1;
-            Exp += 0;
             MinDmg += 1;
             MaxDmg += MinDmg;
-            PhysRes += 0;
             Class = Class.Unknown;
             Race = Race.Unknown;
             PhysRes += (Sta) / 3;

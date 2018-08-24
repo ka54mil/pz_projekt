@@ -9,8 +9,9 @@
                     heroId: $('#ID').val()
                 }
             }).then(function (result) {
-                console.log(result);
-                $('#events-container').append('<div class=\"col-12\">' + result + '</div>');
+                $.each(result, function (e) {
+                    $('#events-container').append('<div class=\"col-12\">' + e + '</div>');
+                });
             });
             $(this).val('');
             $(this).removeAttr('disabled');

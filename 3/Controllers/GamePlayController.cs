@@ -87,7 +87,7 @@ namespace _3.Controllers
 
         // GET: GamePlay/ExecuteAction
         [HttpPost]
-        public String ExecuteAction(String action, int heroId)
+        public String[] ExecuteAction(String action, int heroId)
         {
             Hero hero = Db.Hero.Find(heroId);
             Gameplay gameplay = RedisContext.GetFromRedis<Gameplay>($"gameplay-{heroId}");
@@ -97,10 +97,10 @@ namespace _3.Controllers
                 gameplay = new Gameplay(hero);
             }
 
-            string result = new GameplayActions(gameplay).ExecuteAction(action);
+            string[] result = new GameplayActions(gameplay).ExecuteAction(action);
             if (!RedisContext.SaveToRedis($"gameplay-{gameplay.Player.ID}", gameplay))
             {
-                return "There was an error while saving game.";
+                return new String[]{ "There was an error while saving game."};
             }
             return result;
         }

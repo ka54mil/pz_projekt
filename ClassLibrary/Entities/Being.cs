@@ -99,7 +99,12 @@ namespace ClassLibrary.Entities
         {
             InitializeStats();
         }
+
         public virtual void InitializeStats()
+        {
+            InitializeStats(1);
+        }
+        public virtual void InitializeStats(int lvl)
         {
             Str = 1;
             Dex = 1;
@@ -107,12 +112,9 @@ namespace ClassLibrary.Entities
             Spd = 1;
             Sta = 1;
             MaxPockets = 10;
-            Lvl = 1;
-            Exp = 0;
-            MaxDmg = 1;
             MinDmg = 1;
-            PhysRes = 0;
-            RecalculateLvlBasedStats();
+            MaxDmg = MinDmg;
+            LvlUp(lvl);
         }
     }
 

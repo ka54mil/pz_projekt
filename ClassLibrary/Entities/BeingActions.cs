@@ -14,6 +14,16 @@ namespace ClassLibrary.Entities
             return 0 >= AHP;
         }
 
+        public void ChangeHealth(int health)
+        {
+            AHP = health + AHP < MHP ? health + AHP : MHP;
+        }
+        
+        public void ChangeMana(int mana)
+        {
+            AMP = mana + AMP < MMP ? mana + AMP : MMP;
+        }
+
         public bool IsLvlUp()
         {
             return Exp >= ExpToLvlUp;
@@ -22,88 +32,20 @@ namespace ClassLibrary.Entities
         public void RaiseExp(int exp)
         {
             Exp += exp;
-            LvlUp();
-        }
-
-        public bool LvlUp()
-        {
             if (IsLvlUp())
             {
                 Exp -= ExpToLvlUp;
-                Lvl++;
-                return true;
+                LvlUp();
             }
-            return false;
         }
-
-        public int GetRecalculatedBy(int dividor)
-        {
-            return (Lvl + dividor-1) / dividor - (Lvl + dividor - 2) / dividor;
-        }
-
-        public void RecalculateLvlBasedStats()
-        {
-            ExpToLvlUp = Lvl*Lvl * 3;
-
-            if (Race == Race.Beast)
-            {
-                Str += GetRecalculatedBy(3);
-                Str += GetRecalculatedBy(4);
-                MHP += 2;
-            }
-            else if (Race == Race.Elf)
-            {
-                MMP += 1;
-                MHP += 1;
-                Int++;
-                Dex++;
-            }
-            else if (Race == Race.Human)
-            {
-                MMP += 1;
-                MHP += 2;
-                Int++;
-                Sta++;
-            }
-
-            if (Class == Class.Warrior)
-            {
-                MHP += 3;
-                MMP += 1;
-                Str++;
-                MinDmg = Str / 2;
-                MaxDmg = MinDmg + Str / 4;
-            }
-            else if (Class == Class.Archer)
-            {
-                MHP += 2;
-                MMP += 2;
-                Dex++;
-                MinDmg = Dex / 2;
-                MaxDmg = MinDmg + Dex / 4;
-            }
-            else if (Class == Class.Mage)
-            {
-                MHP += 2;
-                MMP += 2;
-                Int++;
-                MinDmg = Int / 2;
-                MaxDmg = MinDmg + Int / 4;
-            }
-            PhysRes = (Sta) / 3;
-            MHP += Sta * 2;
-            MMP += Int;
-            AHP = MHP;
-            AMP = MMP;
-        }
-
+        
         public int AttackEnemy(Being enemy)
         {
             Random r = new Random();
-            int totalDmg = r.Next(MinDmg, MaxDmg+1) - enemy.PhysRes;
+            int totalDmg = r.Next(MinDmg, MaxDmg + 1) - enemy.PhysRes;
 
-            if(totalDmg < 1 ) totalDmg = 1;
-            enemy.AHP -= totalDmg;
+            if (totalDmg < 1) totalDmg = 1;
+            enemy.ChangeHealth(-totalDmg);
             if (enemy.IsDead()) KillEnemy(enemy);
             return totalDmg;
         }
@@ -112,6 +54,89 @@ namespace ClassLibrary.Entities
         {
             RaiseExp(enemy.Exp);
         }
-        
+
+        public int GetRecalculatedStatValue(int dividor)
+        {
+            return GetRecalculatedStatValue(dividor, Lvl, Lvl - 1);
+        }
+        public int GetRecalculatedStatValue(int dividor, int currentValue)
+        {
+            return GetRecalculatedStatValue(dividor, currentValue, currentValue - 1);
+        }
+
+        public int GetRecalculatedStatValue(int dividor, int currentValue, int previousValue)
+        {
+            return (currentValue + previousValue) / dividor - (currentValue + previousValue) / dividor;
+        }
+
+        public void LvlUp()
+        {
+            LvlUp(1);
+        }
+        public void LvlUp(int numberofLvls)
+        {
+            int prevLvl = Lvl;
+            Lvl += numberofLvls ;
+            ExpToLvlUp = Lvl*Lvl * 3;
+            int lvlDiffByOne = numberofLvls;
+            int lvlDiffByTwo = GetRecalculatedStatValue(2, Lvl, prevLvl);
+            int lvlDiffByThree = GetRecalculatedStatValue(3, Lvl, prevLvl);
+            int lvlDiffByFour = GetRecalculatedStatValue(4, Lvl, prevLvl);
+            int prevStr = Str;
+            int prevDex = Dex;
+            int prevSta = Sta;
+            int prevInt = Int;
+
+            if (Race == Race.Beast)
+            {
+                Str += lvlDiffByFour;
+                Sta += lvlDiffByThree;
+                MHP += lvlDiffByOne * 2;
+            }
+            else if (Race == Race.Elf)
+            {
+                MMP += lvlDiffByOne;
+                MHP += lvlDiffByOne;
+                Int += lvlDiffByThree;
+                Dex += lvlDiffByFour;
+            }
+            else if (Race == Race.Human)
+            {
+                MHP += lvlDiffByOne;
+                Int += lvlDiffByFour;
+                Sta += lvlDiffByThree;
+                Dex += lvlDiffByFour;
+            }
+
+            if (Class == Class.Warrior)
+            {
+                MHP += lvlDiffByOne * 2;
+                MMP += lvlDiffByTwo;
+                Str += lvlDiffByTwo;
+                MinDmg = GetRecalculatedStatValue(2,Str,prevStr);
+                MaxDmg = MinDmg + GetRecalculatedStatValue(4, Str, prevStr);
+            }
+            else if (Class == Class.Archer)
+            {
+                MHP += lvlDiffByOne + lvlDiffByTwo;
+                MMP += lvlDiffByOne;
+                Dex += lvlDiffByTwo;
+                MinDmg = GetRecalculatedStatValue(2, Dex, prevDex);
+                MaxDmg = MinDmg + GetRecalculatedStatValue(4, Dex, prevDex);
+            }
+            else if (Class == Class.Mage)
+            {
+                MHP += lvlDiffByOne;
+                MMP += lvlDiffByOne + lvlDiffByTwo;
+                Int += lvlDiffByTwo;
+                MinDmg = GetRecalculatedStatValue(2, Int, prevInt);
+                MaxDmg = MinDmg + GetRecalculatedStatValue(4, Int, prevInt);
+            }
+            PhysRes += GetRecalculatedStatValue(3, Sta, prevSta);
+            MHP += (Sta - prevSta) * 2;
+            MMP += GetRecalculatedStatValue(2, Int, prevInt);
+            AHP = MHP;
+            AMP = MMP;
+        }
     }
 }
