@@ -14,6 +14,7 @@ namespace ClassLibrary.Entities
         public string Description { get; set; }
         public List<Monster> Monsters { get; set; } = new List<Monster>();
         public LocationType LocationType { get; set; }
+        public List<LocationType> UnclockedByLocationTypes { get; set; } = new List<LocationType>();
     }
 
     public enum LocationType

@@ -1,5 +1,7 @@
 ﻿using ClassLibrary.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ClassLibrary.Generators
 {
@@ -14,7 +16,7 @@ namespace ClassLibrary.Generators
 
         internal static Location CreateLocationAt(World world, int x, int y)
         {
-            return world.AddLocation(LocationGenerator.CreateLocation(x, y));
+            return world.AddLocation(LocationGenerator.CreateUnlockedLocation(world.Locations.Select(l => l.LocationType).Distinct().ToList(), x, y));
         }
     }
 }
