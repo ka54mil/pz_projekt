@@ -1,4 +1,5 @@
 ﻿using ClassLibrary.Generators;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ClassLibrary.Entities
     [Serializable]
     public class Gameplay : Entity
     {
+        [JsonIgnore]
         public Hero Player { get; set; }
         public World World { get; set; }
         public Location CurrentLocation { get; set; }
@@ -22,6 +24,11 @@ namespace ClassLibrary.Entities
             Monsters = new List<Monster>();
             World = WorldGenerator.CreateWorld();
             CurrentLocation = World.LocationAt(0, 0);
+        }
+
+        public Monster GetMonsterByName(string name)
+        {
+             return Monsters.Where(e => e.Name.Equals(name)).FirstOrDefault() ?? Monsters.FirstOrDefault();
         }
     }
 }

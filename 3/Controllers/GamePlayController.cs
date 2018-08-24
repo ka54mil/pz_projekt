@@ -1,7 +1,10 @@
 ﻿using _3.DAL;
 using _3.Helpers;
+using _3.ViewModels;
 using ClassLibrary.Entities;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -52,9 +55,8 @@ namespace _3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateCharacter([Bind(Include = "Name, Class, Race")] Hero hero)
         {
-            Monster mouse = new Monster { Name = "Mouse", MHP = 1, Exp = 1, EncounterChance = 50 };
-
             Profile profile = Db.Profile.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            hero.InitializeStats();
             hero.ProfileID = profile.ID;
             ModelState.Clear();
             TryValidateModel(hero);
@@ -87,22 +89,31 @@ namespace _3.Controllers
 
         // GET: GamePlay/ExecuteAction
         [HttpPost]
-        public String[] ExecuteAction(String action, int heroId)
+        public JsonResult ExecuteAction(String action, int heroId)
         {
             Hero hero = Db.Hero.Find(heroId);
-            Gameplay gameplay = RedisContext.GetFromRedis<Gameplay>($"gameplay-{heroId}");
+            Gameplay gameplay = RedisContext.GetFromRedis<Gameplay>($"gameplay-{heroId}") ?? new Gameplay(hero);
+            JsonResult jsonResult = new JsonResult();
+            gameplay.Player = hero;
+            List<string> result = new GameplayActions(gameplay).ExecuteAction(action).ToList();
 
-            if (gameplay == null)
+            if (0 == gameplay.Monsters.Count)
             {
-                gameplay = new Gameplay(hero);
+                gameplay.Monsters = gameplay.CurrentLocation.AmbushPlayer();
+                result.AddRange(gameplay.Monsters.Select(m => $"You have been attacked by {m.Name}"));
             }
-
-            string[] result = new GameplayActions(gameplay).ExecuteAction(action);
+            GameplayModel gameplayModel = new GameplayModel(hero, result.ToArray());
             if (!RedisContext.SaveToRedis($"gameplay-{gameplay.Player.ID}", gameplay))
             {
-                return new String[]{ "There was an error while saving game."};
+                gameplayModel.Messages = new String[]{ "There was an error while saving game."};
+            } else {
+
+                hero.LastPlayedAt = DateTime.UtcNow;
+                Db.Entry(hero).State = EntityState.Modified;
+                Db.SaveChanges();
             }
-            return result;
+            jsonResult.Data = JsonConvert.SerializeObject(gameplayModel);
+            return jsonResult;
         }
     }
 }

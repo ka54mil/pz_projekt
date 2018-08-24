@@ -9,10 +9,6 @@ namespace ClassLibrary.Entities
 {
     public class Hero : Being
     {
-        public Hero()
-        {
-            CreatedAt = DateTime.UtcNow;
-        }
         [Display(Name = "Profile ID")]
         public int ProfileID { get; set; }
 
@@ -24,6 +20,11 @@ namespace ClassLibrary.Entities
 
         [Display(Name = "Last time played")]
         public DateTime? LastPlayedAt { get; set; }
-        
+
+        public Hero()
+        {
+            CreatedAt = DateTime.UtcNow;
+        }
+
     }
 }

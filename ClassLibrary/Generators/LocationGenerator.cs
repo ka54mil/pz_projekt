@@ -35,11 +35,11 @@ namespace ClassLibrary.Generators
         internal static Location CreateUnlockedLocation(List<LocationType> UnlockedLocationTypes, int x, int y)
         {
             Random r = new Random();
-            Location[] tmpLocationTemplates = locationTemplates.Where(
+            var tmpLocationTemplates = locationTemplates.Where(
                 l => UnlockedLocationTypes.Intersect(l.UnclockedByLocationTypes).Count() == l.UnclockedByLocationTypes.Count()
-            ).ToArray();
-            int i = r.Next(tmpLocationTemplates.Length);
-            Location location = tmpLocationTemplates[i];
+            );
+            int i = r.Next(tmpLocationTemplates.Count());
+            Location location = tmpLocationTemplates.ElementAt(i);
             location.X = x;
             location.Y = y;
             return location;

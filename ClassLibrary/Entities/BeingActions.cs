@@ -42,7 +42,7 @@ namespace ClassLibrary.Entities
         public int AttackEnemy(Being enemy)
         {
             Random r = new Random();
-            int totalDmg = r.Next(MinDmg, MaxDmg + 1) - enemy.PhysRes;
+            var totalDmg = r.Next(MinDmg, MaxDmg + 1) - enemy.PhysRes;
 
             if (totalDmg < 1) totalDmg = 1;
             enemy.ChangeHealth(-totalDmg);
@@ -73,19 +73,19 @@ namespace ClassLibrary.Entities
         {
             LvlUp(1);
         }
-        public void LvlUp(int numberofLvls)
+        public void LvlUp(int numberOfLvls)
         {
-            int prevLvl = Lvl;
-            Lvl += numberofLvls ;
+            var prevLvl = Lvl;
+            Lvl += numberOfLvls;
             ExpToLvlUp = Lvl*Lvl * 3;
-            int lvlDiffByOne = numberofLvls;
-            int lvlDiffByTwo = GetRecalculatedStatValue(2, Lvl, prevLvl);
-            int lvlDiffByThree = GetRecalculatedStatValue(3, Lvl, prevLvl);
-            int lvlDiffByFour = GetRecalculatedStatValue(4, Lvl, prevLvl);
-            int prevStr = Str;
-            int prevDex = Dex;
-            int prevSta = Sta;
-            int prevInt = Int;
+            var lvlDiffByOne = numberOfLvls;
+            var lvlDiffByTwo = GetRecalculatedStatValue(2, Lvl, prevLvl);
+            var lvlDiffByThree = GetRecalculatedStatValue(3, Lvl, prevLvl);
+            var lvlDiffByFour = GetRecalculatedStatValue(4, Lvl, prevLvl);
+            var prevStr = Str;
+            var prevDex = Dex;
+            var prevSta = Sta;
+            var prevInt = Int;
 
             if (Race == Race.Beast)
             {
@@ -113,24 +113,24 @@ namespace ClassLibrary.Entities
                 MHP += lvlDiffByOne * 2;
                 MMP += lvlDiffByTwo;
                 Str += lvlDiffByTwo;
-                MinDmg = GetRecalculatedStatValue(2,Str,prevStr);
-                MaxDmg = MinDmg + GetRecalculatedStatValue(4, Str, prevStr);
+                MinDmg += GetRecalculatedStatValue(3,Str,prevStr);
+                MaxDmg += GetRecalculatedStatValue(2, Str, prevStr);
             }
             else if (Class == Class.Archer)
             {
                 MHP += lvlDiffByOne + lvlDiffByTwo;
                 MMP += lvlDiffByOne;
                 Dex += lvlDiffByTwo;
-                MinDmg = GetRecalculatedStatValue(2, Dex, prevDex);
-                MaxDmg = MinDmg + GetRecalculatedStatValue(4, Dex, prevDex);
+                MinDmg += GetRecalculatedStatValue(3, Dex, prevDex);
+                MaxDmg += GetRecalculatedStatValue(2, Dex, prevDex);
             }
             else if (Class == Class.Mage)
             {
                 MHP += lvlDiffByOne;
                 MMP += lvlDiffByOne + lvlDiffByTwo;
                 Int += lvlDiffByTwo;
-                MinDmg = GetRecalculatedStatValue(2, Int, prevInt);
-                MaxDmg = MinDmg + GetRecalculatedStatValue(4, Int, prevInt);
+                MinDmg += GetRecalculatedStatValue(3, Int, prevInt);
+                MaxDmg += GetRecalculatedStatValue(2, Int, prevInt);
             }
             PhysRes += GetRecalculatedStatValue(3, Sta, prevSta);
             MHP += (Sta - prevSta) * 2;

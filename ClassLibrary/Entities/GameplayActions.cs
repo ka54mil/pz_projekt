@@ -21,22 +21,22 @@ namespace ClassLibrary.Entities
             actions.Add("hit", "Attack");
         }
 
-        public string[] ExecuteAction(string action)
+        public List<string> ExecuteAction(string action)
         {
             action = action.ToLower();
             string key = actions.Keys.Where(k => action.StartsWith(k)).FirstOrDefault();
             string methodName = null;
-            if (null == key || !actions.TryGetValue(key, out methodName)) return new string[] { $"Couldn't perform \"{action}\" action" };
+            if (null == key || !actions.TryGetValue(key, out methodName))
+                return new List<string> { $"Couldn't perform \"{action}\" action" };
 
             MethodInfo method = GetType().GetMethod(methodName, BindingFlags.NonPublic|BindingFlags.Instance);
             action = action.Replace(key, "");
-            return method.Invoke(this, new string[] { action.Trim()}) as string[];
+            return method.Invoke(this, new string[] { action.Trim()}) as List<string>;
         }
 
-        private string[] Go(string direction)
+        private List<string> Go(string direction)
         {
-            int x = gameplay.CurrentLocation.X;
-            int y = gameplay.CurrentLocation.Y;
+            int x = gameplay.CurrentLocation.X, y = gameplay.CurrentLocation.Y;
             direction = direction.Replace("to the", "").Trim();
             switch (direction)
             {
@@ -60,43 +60,44 @@ namespace ClassLibrary.Entities
                     break;
             }
             gameplay.CurrentLocation = gameplay.World.LocationAt(x, y);
-            return new string[] { $"You have moved to {gameplay.CurrentLocation.Name}. {gameplay.CurrentLocation.Description}"};
+            gameplay.Monsters.Clear();
+            return new List<string> { $"You have moved to {gameplay.CurrentLocation.Name}. {gameplay.CurrentLocation.Description}"};
         }
 
-        private string[] Attack(string target)
+        private List<string> Attack(string target)
         {
             List<string> result = new List<string>();
-            if(0 == gameplay.Monsters.Count)
-            {
+            if(0 == gameplay.Monsters.Count){
                 result.Add($"You have tried to attack the ghost but unfortunately it was just your imagination.");
-            } else
-            {
-                Monster enemy = null;
-                if (!"".Equals(target))
-                {
-                    enemy = gameplay.Monsters.Where(e => e.Name.Equals(target)).FirstOrDefault();
+            } else {
+                Monster enemy = gameplay.GetMonsterByName(target);
+                List<Being> attackQueue = gameplay.Monsters.OfType<Being>().ToList();
+                attackQueue.Add(gameplay.Player);
+
+                foreach(Being b in attackQueue.OrderByDescending(b => b.Spd)){
+                    if (!b.IsDead()){
+                        if (b is Hero){
+                            result.Add($"You have attacked {enemy.Name} for {b.AttackEnemy(enemy)} dmg");
+                        } else {
+                            result.Add($"You have been attacked {enemy.Name} for {b.AttackEnemy(gameplay.Player)} dmg");
+                        }
+                    }
                 }
-                if(null == enemy)
-                {
-                    enemy = gameplay.Monsters.First();
-                }
-                int dmgDone = gameplay.Player.AttackEnemy(enemy);
-                result.Add($"You have attacked {enemy.Name} for {dmgDone} dmg");
-                if (enemy.IsDead())
-                {
+
+                if (enemy.IsDead()) {
+                    gameplay.Monsters.Remove(enemy);
                     result.Add($"You have killed {enemy.Name} and earned {enemy.Exp} experience");
-                    if (gameplay.Player.Exp > enemy.Exp)
-                    {
+                    if (gameplay.Player.Exp > enemy.Exp) {
                         result.Add("Lvl up!");
                     }
                 }
             }
-            return result.ToArray();
+            return result;
         }
 
-        private string PickUp(string target)
+        private List<string> PickUp(string target)
         {
-            return $"You have tried to pick up the {target} but it slipped and you can't find it anymore.";
+            return new List<string> { $"You have tried to pick up the {target} but it slipped and you can't find it anymore." };
         }
     }
 }

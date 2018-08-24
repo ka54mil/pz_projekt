@@ -24,7 +24,7 @@ namespace ClassLibrary.Entities
         [Display(Name="Maximum health points")]
         public int MHP { get; set; }
 
-        [Range(1, maxValue, ErrorMessage = "Only positive number allowed")]
+        [Range(0, maxValue, ErrorMessage = "Only positive number allowed")]
         [Display(Name="Actual health points")]
         public int AHP { get; set; }
 
@@ -32,7 +32,7 @@ namespace ClassLibrary.Entities
         [Display(Name="Maximum mana points")]
         public int MMP { get; set; }
 
-        [Range(1, maxValue, ErrorMessage = "Only positive number allowed")]
+        [Range(0, maxValue, ErrorMessage = "Only positive number allowed")]
         [Display(Name="Actual mana points")]
         public int AMP { get; set; }
 
@@ -95,11 +95,6 @@ namespace ClassLibrary.Entities
 
         public virtual ICollection<Pocket> Pockets { get; set; }
 
-        public Being()
-        {
-            InitializeStats();
-        }
-
         public virtual void InitializeStats()
         {
             InitializeStats(1);
@@ -114,6 +109,8 @@ namespace ClassLibrary.Entities
             MaxPockets = 10;
             MinDmg = 1;
             MaxDmg = MinDmg;
+            MHP = 1;
+            MMP = 1;
             LvlUp(lvl);
         }
     }
