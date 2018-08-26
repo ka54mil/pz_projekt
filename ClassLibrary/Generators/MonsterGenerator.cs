@@ -13,11 +13,11 @@ namespace ClassLibrary.Generators
         {
             List<Monster> monsters = new List<Monster>();
 
-            Monster mouse = new Monster { Name = "Mouse", MHP = 1, Exp = 1, EncounterChance=30};
+            Monster mouse = new Monster { Name = "Mouse", Exp = 1, Gold = 1, EncounterChance=30};
             mouse.InitializeStats();
-            Monster rabbit = new Monster { Name = "Rabbit", MHP = 2, Exp = 2, Sta = 1, MaxDmg = 1, Spd = 1,EncounterChance = 25 };
+            Monster rabbit = new Monster { Name = "Rabbit", MHP = 1, Exp = 2, Gold = 2, Sta = 1, MaxDmg = 1, Spd = 1,EncounterChance = 25 };
             rabbit.InitializeStats();
-            Monster goat = new Monster { Name = "Goat", MHP = 4, Exp = 5, Sta = 2, Str = 1,Dex=1 ,MinDmg=1 , MaxDmg = 3, Spd = 2, EncounterChance=20 };
+            Monster goat = new Monster { Name = "Goat", MHP = 3, Exp = 5, Gold = 5, Sta = 2, Str = 1,Dex=1 ,MinDmg=1 , MaxDmg = 3, Spd = 2, EncounterChance=20 };
             goat.InitializeStats();
 
             switch (locationType)

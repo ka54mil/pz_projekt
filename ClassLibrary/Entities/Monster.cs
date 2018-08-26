@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ClassLibrary.Entities
 {
-    public class Monster : Being, ICloneable
+    public class Monster : Being
     {
         public int EncounterChance { get; set; }
         public Monster()
@@ -31,11 +31,6 @@ namespace ClassLibrary.Entities
             MMP += Int;
             AHP = MHP;
             AMP = MMP;
-        }
-
-        public object Clone()
-        {
-            return MemberwiseClone();
         }
     }
 }

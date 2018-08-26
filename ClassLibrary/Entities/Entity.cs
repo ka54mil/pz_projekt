@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ClassLibrary.Helpers;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -20,5 +22,8 @@ namespace ClassLibrary.Entities
 
             return sb.ToString();
         }
+        public string Serialize() => StringHelper.SerializeObject(this);
+
+        public T Clone<T>() => StringHelper.DeserializeObject<T>(Serialize());
     }
 }

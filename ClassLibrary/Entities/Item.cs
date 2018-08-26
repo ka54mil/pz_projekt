@@ -9,24 +9,18 @@ namespace ClassLibrary.Entities
     public class Item : Entity
     {
         public int ID { get; set; }
+        public string Name { get; set; }
         [Required]
         public int Size { get; set; }
-        [Required]
-        public ItemType ItemType { get; set; }
-    }
+        public Item()
+        {
 
-    public enum ItemType
-    {
-        Unknown,
-        Weapon,
-        Armor,
-        Ring,
-        Necklace,
-        Boots,
-        Shield,
-        Helmet,
-        Gloves,
-        Trousers,
-        Consumable
+        }
+
+        public Item(string name, int size)
+        {
+            Name = name;
+            Size = size;
+        }
     }
 }

@@ -53,6 +53,7 @@ namespace ClassLibrary.Entities
         public void KillEnemy(Being enemy)
         {
             RaiseExp(enemy.Exp);
+            Gold += enemy.Gold;
         }
 
         public int GetRecalculatedStatValue(int dividor)
@@ -137,6 +138,12 @@ namespace ClassLibrary.Entities
             MMP += GetRecalculatedStatValue(2, Int, prevInt);
             AHP = MHP;
             AMP = MMP;
+        }
+
+        public void Revive()
+        {
+            AHP = (MHP + 8) / 10;
+            AMP = (MMP + 8) / 10;
         }
     }
 }

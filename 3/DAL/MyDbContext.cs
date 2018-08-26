@@ -13,6 +13,7 @@ namespace _3.DAL
     {
         public DbSet<Profile> Profile { get; set; }
         public DbSet<Item> Item { get; set; }
+        public DbSet<Weapon> Weapon { get; set; }
         public DbSet<Pocket> Pocket { get; set; }
         public DbSet<Hero> Hero { get; set; }
         public DbSet<Effect> Effect { get; set; }

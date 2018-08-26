@@ -57,10 +57,13 @@
     <Compile Include="Entities\Monster.cs" />
     <Compile Include="Entities\Pocket.cs" />
     <Compile Include="Entities\Profile.cs" />
+    <Compile Include="Entities\Weapon.cs" />
     <Compile Include="Entities\World.cs" />
+    <Compile Include="Generators\ItemGenerator.cs" />
     <Compile Include="Generators\LocationGenerator.cs" />
     <Compile Include="Generators\MonsterGenerator.cs" />
     <Compile Include="Generators\WorldGenerator.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

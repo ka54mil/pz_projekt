@@ -25,7 +25,7 @@ namespace ClassLibrary.Entities
                 var tmpEncounterChance = m.EncounterChance;
                 int i = 1;
                 while(r.Next(100) < m.EncounterChance){
-                    Monster clone = m.Clone() as Monster;
+                    Monster clone = m.Clone< Monster>();
                     clone.Name = $"{clone.Name} {i}";
                     monsters.Add(clone);
                     m.EncounterChance = (m.EncounterChance+4) / 5*4;

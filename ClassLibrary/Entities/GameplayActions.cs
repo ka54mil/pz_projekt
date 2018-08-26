@@ -19,6 +19,8 @@ namespace ClassLibrary.Entities
             actions.Add("move", "Go");
             actions.Add("attack", "Attack");
             actions.Add("hit", "Attack");
+            actions.Add("revive", "Attack");
+            actions.Add("suicude", "Attack");
         }
 
         public List<string> ExecuteAction(string action)
@@ -99,5 +101,11 @@ namespace ClassLibrary.Entities
         {
             return new List<string> { $"You have tried to pick up the {target} but it slipped and you can't find it anymore." };
         }
+        private List<string> Revive()
+        {
+            gameplay.KillPlayer();
+            return new List<string> { $"You have died, but somehow your body was moved to the {gameplay.CurrentLocation.Name}. {gameplay.CurrentLocation.Description} Where you were revived." };
+        }
+
     }
 }

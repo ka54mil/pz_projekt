@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ClassLibrary.Helpers;
+using Newtonsoft.Json;
 using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace _3.DAL
         {
             using (var redisClient = redisManager.GetClient())
             {
-                return redisClient.Set(key, JsonConvert.SerializeObject(value));
+                return redisClient.Set(key, StringHelper.SerializeObject(value));
             }
         }
         public static T GetFromRedis<T>(string key)
@@ -25,7 +26,7 @@ namespace _3.DAL
             {
                 string value = redisClient.Get<string>(key);
                 if (value == null) return default(T);
-                return JsonConvert.DeserializeObject<T>(value);
+                return StringHelper.DeserializeObject<T>(value);
             }
         }
     }

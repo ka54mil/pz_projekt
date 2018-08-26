@@ -66,11 +66,11 @@ namespace ClassLibrary.Entities
 
         [Range(1, maxValue, ErrorMessage = "Only positive number allowed")]
         [Display(Name = "Min damage")]
-        public int MinDmg { get; set; }
+        public virtual int MinDmg { get; set; }
 
         [Range(1, maxValue, ErrorMessage = "Only positive number allowed")]
         [Display(Name = "Max damage")]
-        public int MaxDmg { get; set; }
+        public virtual int MaxDmg { get; set; }
 
         [Display(Name = "Physical resistance")]
         public int PhysRes { get; set; }
@@ -90,6 +90,9 @@ namespace ClassLibrary.Entities
         [Range(0, maxValue, ErrorMessage = "Only positive number allowed")]
         [Display(Name = "Experience to level up")]
         public int ExpToLvlUp { get; set; }
+
+        [Range(0, maxValue, ErrorMessage = "Only positive number allowed")]
+        public int Gold { get; set; }
 
         public virtual ICollection<Effect> Effects { get; set; }
 
