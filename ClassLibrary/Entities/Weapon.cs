@@ -29,17 +29,23 @@ namespace ClassLibrary.Entities
             MaxDmg = weapon.MaxDmg;
             Lvl = weapon.Lvl;
             Name = weapon.Name;
-            while (lvl > Lvl)
+            if(Lvl < lvl)
             {
-                Upgrade();
+                Name += $" +{Lvl-lvl}";
             }
+            Upgrade(Lvl-lvl);
         }
 
-        public void Upgrade()
+        public void Upgrade(int lvlsUp)
         {
-            MinDmg += Lvl;
-            MaxDmg = MinDmg + Lvl / 3;
-            UpgradeCost += Lvl * Lvl + 3;
+            int prevLvl = Lvl;
+            while (Lvl < prevLvl + lvlsUp)
+            {
+                Lvl++;
+                UpgradeCost += Lvl * Lvl + 3;
+            }
+            MinDmg += lvlsUp;
+            MaxDmg += Lvl / 3 - prevLvl / 3;
         }
     }
 }

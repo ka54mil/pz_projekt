@@ -11,7 +11,7 @@ namespace ClassLibrary.Generators
     {
         public static Weapon[] weapons =
         {
-            new Weapon{Name = "Fists", MaxDmg = 1, UpgradeCost = 5 }
+            new Weapon{Name = "Fists"}
         };
 
         public static Weapon GetWeaponByLvl(int lvl)
