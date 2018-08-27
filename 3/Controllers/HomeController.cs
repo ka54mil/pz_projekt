@@ -13,7 +13,7 @@ namespace _3.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("ChooseCharacter", "Gameplay");
         }
 
         public ActionResult About()

@@ -15,28 +15,31 @@ namespace ClassLibrary.Generators
                     Description = "Full of mice and rabbits",
                     Monsters = MonsterGenerator.CreateMonsterList(LocationType.Plain_field),
                     LocationType = LocationType.Plain_field,
-                    UnclockedByLocationTypes = new List<LocationType>{LocationType.Unknown}
+                    UnlockedByLocationTypes = new List<LocationType>{LocationType.Unknown},
+                    MaxAmbushSize = 1
                 },
                 new Location{
                     Name = "Forest",
                     Description = "You can hear wolves and bears",
                     Monsters = MonsterGenerator.CreateMonsterList(LocationType.Forest),
                     LocationType = LocationType.Forest,
-                    UnclockedByLocationTypes = new List<LocationType>{LocationType.Plain_field}
+                    UnlockedByLocationTypes = new List<LocationType>{LocationType.Plain_field},
+                    MaxAmbushSize = 2
                 },
                 new Location{
                     Name = "Mountain",
                     Description = "Be aware of snakes",
                     Monsters = MonsterGenerator.CreateMonsterList(LocationType.Mountain),
                     LocationType = LocationType.Mountain,
-                    UnclockedByLocationTypes = new List<LocationType>{LocationType.Forest}
+                    UnlockedByLocationTypes = new List<LocationType>{LocationType.Forest},
+                    MaxAmbushSize = 3
                 }
             };
         internal static Location CreateUnlockedLocation(List<LocationType> UnlockedLocationTypes, int x, int y)
         {
             Random r = new Random();
             var tmpLocationTemplates = locationTemplates.Where(
-                l => UnlockedLocationTypes.Intersect(l.UnclockedByLocationTypes).Count() == l.UnclockedByLocationTypes.Count()
+                l => UnlockedLocationTypes.Intersect(l.UnlockedByLocationTypes).Count() == l.UnlockedByLocationTypes.Count()
             );
             int i = r.Next(tmpLocationTemplates.Count());
             Location location = tmpLocationTemplates.ElementAt(i);

@@ -66,11 +66,11 @@ namespace ClassLibrary.Entities
 
         [Range(1, maxValue, ErrorMessage = "Only positive number allowed")]
         [Display(Name = "Min damage")]
-        public virtual int MinDmg { get; set; }
+        public int MinDmg { get; set; }
 
         [Range(1, maxValue, ErrorMessage = "Only positive number allowed")]
         [Display(Name = "Max damage")]
-        public virtual int MaxDmg { get; set; }
+        public int MaxDmg { get; set; }
 
         [Display(Name = "Physical resistance")]
         public int PhysRes { get; set; }

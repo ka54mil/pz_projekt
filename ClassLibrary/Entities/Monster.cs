@@ -20,7 +20,7 @@ namespace ClassLibrary.Entities
             Int += 1;
             Spd += 1;
             Sta += 1;
-            MaxPockets += 5;
+            MaxPockets = 5;
             Lvl += 1;
             MinDmg += 1;
             MaxDmg += MinDmg;
@@ -31,6 +31,11 @@ namespace ClassLibrary.Entities
             MMP += Int;
             AHP = MHP;
             AMP = MMP;
+        }
+
+        public IDroppable[] GetDroppableItems()
+        {
+            return Pockets.Select(p => p.Item).OfType<IDroppable>().ToArray();
         }
     }
 }

@@ -2,6 +2,7 @@
 using _3.Helpers;
 using _3.ViewModels;
 using ClassLibrary.Entities;
+using ClassLibrary.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -80,7 +81,7 @@ namespace _3.Controllers
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             Db.Hero.Remove(hero);
-            if(0 == Db.SaveChanges())
+            if (0 == Db.SaveChanges())
             {
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
@@ -112,7 +113,7 @@ namespace _3.Controllers
                 Db.Entry(hero).State = EntityState.Modified;
                 Db.SaveChanges();
             }
-            jsonResult.Data = JsonConvert.SerializeObject(gameplayModel);
+            jsonResult.Data = StringHelper.SerializeObject(gameplayModel);
             return jsonResult;
         }
     }

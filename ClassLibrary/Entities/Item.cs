@@ -10,17 +10,14 @@ namespace ClassLibrary.Entities
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        [Required]
-        public int Size { get; set; }
         public Item()
         {
 
         }
 
-        public Item(string name, int size)
+        public Item(string name)
         {
             Name = name;
-            Size = size;
         }
     }
 }

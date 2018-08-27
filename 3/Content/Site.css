@@ -47,8 +47,13 @@ textarea {
     width: 100%;
 }
 
-a, button:focus{
+a, button:focus {
     outline: none;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+a:hover {
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .close {

@@ -49,6 +49,7 @@
     <Compile Include="Entities\Being.cs" />
     <Compile Include="Entities\Effect.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Food.cs" />
     <Compile Include="Entities\Gameplay.cs" />
     <Compile Include="Entities\GameplayActions.cs" />
     <Compile Include="Entities\Hero.cs" />
@@ -63,7 +64,10 @@
     <Compile Include="Generators\LocationGenerator.cs" />
     <Compile Include="Generators\MonsterGenerator.cs" />
     <Compile Include="Generators\WorldGenerator.cs" />
+    <Compile Include="Helpers\RandomHelper.cs" />
+    <Compile Include="Helpers\StatsHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Entities\IDroppable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

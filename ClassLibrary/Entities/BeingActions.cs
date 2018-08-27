@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
+using ClassLibrary.Helpers;
 
 namespace ClassLibrary.Entities
 {
@@ -42,32 +43,24 @@ namespace ClassLibrary.Entities
         public int AttackEnemy(Being enemy)
         {
             Random r = new Random();
-            var totalDmg = r.Next(MinDmg, MaxDmg + 1) - enemy.PhysRes;
-
-            if (totalDmg < 1) totalDmg = 1;
-            enemy.ChangeHealth(-totalDmg);
+            var dmg = r.Next(MinDmg, MaxDmg + 1);
+            dmg = enemy.TakeDmg(dmg);
             if (enemy.IsDead()) KillEnemy(enemy);
-            return totalDmg;
+            return dmg;
+        }
+
+        public int TakeDmg(int dmg)
+        {
+            dmg -= PhysRes;
+            if (dmg < 1) dmg = 1;
+            ChangeHealth(-dmg);
+            return dmg;
         }
 
         public void KillEnemy(Being enemy)
         {
             RaiseExp(enemy.Exp);
             Gold += enemy.Gold;
-        }
-
-        public int GetRecalculatedStatValue(int dividor)
-        {
-            return GetRecalculatedStatValue(dividor, Lvl, Lvl - 1);
-        }
-        public int GetRecalculatedStatValue(int dividor, int currentValue)
-        {
-            return GetRecalculatedStatValue(dividor, currentValue, currentValue - 1);
-        }
-
-        public int GetRecalculatedStatValue(int dividor, int currentValue, int previousValue)
-        {
-            return (currentValue + previousValue) / dividor - (currentValue + previousValue) / dividor;
         }
 
         public void LvlUp()
@@ -80,9 +73,9 @@ namespace ClassLibrary.Entities
             Lvl += numberOfLvls;
             ExpToLvlUp = Lvl*Lvl * 3;
             var lvlDiffByOne = numberOfLvls;
-            var lvlDiffByTwo = GetRecalculatedStatValue(2, Lvl, prevLvl);
-            var lvlDiffByThree = GetRecalculatedStatValue(3, Lvl, prevLvl);
-            var lvlDiffByFour = GetRecalculatedStatValue(4, Lvl, prevLvl);
+            var lvlDiffByTwo = StatsHelper.GetRecalculatedStatValue(2, Lvl, prevLvl);
+            var lvlDiffByThree = StatsHelper.GetRecalculatedStatValue(3, Lvl, prevLvl);
+            var lvlDiffByFour = StatsHelper.GetRecalculatedStatValue(4, Lvl, prevLvl);
             var prevStr = Str;
             var prevDex = Dex;
             var prevSta = Sta;
@@ -114,28 +107,28 @@ namespace ClassLibrary.Entities
                 MHP += lvlDiffByOne * 2;
                 MMP += lvlDiffByTwo;
                 Str += lvlDiffByTwo;
-                MinDmg += GetRecalculatedStatValue(3,Str,prevStr);
-                MaxDmg += GetRecalculatedStatValue(2, Str, prevStr);
+                MinDmg += StatsHelper.GetRecalculatedStatValue(3,Str,prevStr);
+                MaxDmg += StatsHelper.GetRecalculatedStatValue(2, Str, prevStr);
             }
             else if (Class == Class.Archer)
             {
                 MHP += lvlDiffByOne + lvlDiffByTwo;
                 MMP += lvlDiffByOne;
                 Dex += lvlDiffByTwo;
-                MinDmg += GetRecalculatedStatValue(3, Dex, prevDex);
-                MaxDmg += GetRecalculatedStatValue(2, Dex, prevDex);
+                MinDmg += StatsHelper.GetRecalculatedStatValue(3, Dex, prevDex);
+                MaxDmg += StatsHelper.GetRecalculatedStatValue(2, Dex, prevDex);
             }
             else if (Class == Class.Mage)
             {
                 MHP += lvlDiffByOne;
                 MMP += lvlDiffByOne + lvlDiffByTwo;
                 Int += lvlDiffByTwo;
-                MinDmg += GetRecalculatedStatValue(3, Int, prevInt);
-                MaxDmg += GetRecalculatedStatValue(2, Int, prevInt);
+                MinDmg += StatsHelper.GetRecalculatedStatValue(3, Int, prevInt);
+                MaxDmg += StatsHelper.GetRecalculatedStatValue(2, Int, prevInt);
             }
-            PhysRes += GetRecalculatedStatValue(3, Sta, prevSta);
+            PhysRes += StatsHelper.GetRecalculatedStatValue(3, Sta, prevSta);
             MHP += (Sta - prevSta) * 2;
-            MMP += GetRecalculatedStatValue(2, Int, prevInt);
+            MMP += StatsHelper.GetRecalculatedStatValue(2, Int, prevInt);
             AHP = MHP;
             AMP = MMP;
         }
