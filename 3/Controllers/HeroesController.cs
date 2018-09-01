@@ -18,7 +18,7 @@ namespace _3.Controllers
     //[Authorize(Roles = "Admin")]
     public class HeroesController : DefaultController
     {
-        readonly string[] ExcludedFields = new string[] { "Profile", "Pockets", "Effects" };
+        readonly string[] ExcludedFields = new string[] { "Profile", "Pockets", "Effects", "Weapon" };
 
         // GET: Heroes
         public ActionResult Index(string sortOrder, HeroSearchModel searchModel,int? page, string sortProperty = "ID")
@@ -28,7 +28,8 @@ namespace _3.Controllers
             ViewBag.searchModel = searchModel;
             ViewBag.sortOrder = sortOrder;
             ViewBag.sortProperty = sortProperty;
-            ViewBag.properties = typeof(Hero).GetProperties().Where(p => Array.IndexOf(ExcludedFields, p.Name) == -1).ToList();
+            var excludedFields = ExcludedFields.Concat(new string[] { "WeaponLvl", "Str", "Spd", "Sta", "Dex", "Int", "AMP", "AHP", "MMP", "MHP", "MinDmg", "MaxDmg", "Exp", "PhysRes", "ExpToLvlUp", "Gold" }).ToArray();
+            ViewBag.properties = typeof(Hero).GetProperties().Where(p => Array.IndexOf(excludedFields, p.Name) == -1).ToList();
             int pageSize = 1;
             int pageNumber = (page ?? 1);
             return View(Heroes.ToPagedList(pageNumber, pageSize));

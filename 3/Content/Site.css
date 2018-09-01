@@ -18,9 +18,13 @@
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
-textarea {
+textarea,
+.pagination > li > a{
     max-width: 280px;
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    border-color: #343a40 !important;
+    background-color: #6c757d !important;
 }
 
 /* Set padding to display errors that occur during databinding */
@@ -47,9 +51,14 @@ textarea {
     width: 100%;
 }
 
-a, button:focus {
+a, button:focus, input.btn{
     outline: none;
     color: rgba(255, 255, 255, 0.4);
+}
+
+input.btn:hover, .pagination > li.active > a {
+    background: rgb(0, 0, 0) !important;
+    color: rgb(255,255,255);
 }
 
 a:hover {
@@ -65,4 +74,15 @@ a:hover {
 
 .text-danger {
     color:#8c0f0f !important
+}
+
+input[type=number], select {
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+select {
+    background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
+    background-size: 8px 10px;
 }

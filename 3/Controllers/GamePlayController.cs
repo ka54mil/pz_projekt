@@ -2,6 +2,7 @@
 using _3.Helpers;
 using _3.ViewModels;
 using ClassLibrary.Entities;
+using ClassLibrary.Exceptions;
 using ClassLibrary.Helpers;
 using Newtonsoft.Json;
 using System;
@@ -94,26 +95,38 @@ namespace _3.Controllers
         {
             Hero hero = Db.Hero.Find(heroId);
             Gameplay gameplay = RedisContext.GetFromRedis<Gameplay>($"gameplay-{heroId}") ?? new Gameplay(hero);
+            if (hero.CreatedAt != gameplay.Player.CreatedAt) gameplay = new Gameplay(hero);
             JsonResult jsonResult = new JsonResult();
+            GameplayModel gameplayModel;
             gameplay.Player = hero;
-            List<string> result = new GameplayActions(gameplay).ExecuteAction(action).ToList();
-
-            if (0 == gameplay.Monsters.Count)
+            try
             {
-                gameplay.Monsters = gameplay.CurrentLocation.AmbushPlayer();
-                result.AddRange(gameplay.Monsters.Select(m => $"You have been attacked by {m.Name}"));
+                List<string> result = new GameplayActions(gameplay).ExecuteAction(action).ToList();
+                if (0 == gameplay.Monsters.Count)
+                {
+                    gameplay.Monsters = gameplay.CurrentLocation.AmbushPlayer();
+                    result.AddRange(gameplay.Monsters.Select(m => $"You have been attacked by {m.Name}"));
+                }
+                gameplayModel = new GameplayModel(hero, result.ToArray());
+                if (!RedisContext.SaveToRedis($"gameplay-{gameplay.Player.ID}", gameplay))
+                {
+                    gameplayModel.Messages = new String[] { "There was an error while saving game." };
+                }
+                else
+                {
+                    hero.LastPlayedAt = DateTime.UtcNow;
+                    Db.Entry(hero).State = EntityState.Modified;
+                    Db.SaveChanges();
+                }
+
             }
-            GameplayModel gameplayModel = new GameplayModel(hero, result.ToArray());
-            if (!RedisContext.SaveToRedis($"gameplay-{gameplay.Player.ID}", gameplay))
+            catch (InvalidActionException e)
             {
-                gameplayModel.Messages = new String[]{ "There was an error while saving game."};
-            } else {
+                gameplayModel = new GameplayModel(hero, new string[] { e.Message });
 
-                hero.LastPlayedAt = DateTime.UtcNow;
-                Db.Entry(hero).State = EntityState.Modified;
-                Db.SaveChanges();
             }
             jsonResult.Data = StringHelper.SerializeObject(gameplayModel);
+
             return jsonResult;
         }
     }

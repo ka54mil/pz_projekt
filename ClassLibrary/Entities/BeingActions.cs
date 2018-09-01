@@ -10,6 +10,12 @@ namespace ClassLibrary.Entities
 {
     public partial class Being : Entity
     {
+        public virtual int GetDmg()
+        {
+            Random r = new Random();
+            return r.Next(MinDmg, MaxDmg + 1);
+        }
+
         public bool IsDead()
         {
             return 0 >= AHP;
@@ -42,8 +48,7 @@ namespace ClassLibrary.Entities
         
         public int AttackEnemy(Being enemy)
         {
-            Random r = new Random();
-            var dmg = r.Next(MinDmg, MaxDmg + 1);
+            int dmg = GetDmg();
             dmg = enemy.TakeDmg(dmg);
             if (enemy.IsDead()) KillEnemy(enemy);
             return dmg;
@@ -135,8 +140,8 @@ namespace ClassLibrary.Entities
 
         public void Revive()
         {
-            AHP = (MHP + 8) / 10;
-            AMP = (MMP + 8) / 10;
+            AHP = (MHP * 8 +9) / 10;
+            AMP = (MMP * 8 +9) / 10;
         }
     }
 }

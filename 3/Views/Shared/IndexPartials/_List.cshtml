@@ -4,6 +4,8 @@
     var properties = (IEnumerable<dynamic>)ViewData["properties"];
     var list = (IEnumerable<dynamic>)ViewData["list"];
     string controller = ViewData["controller"] as string ?? ViewContext.RouteData.GetRequiredString("controller");
+    string action = ViewData["action"] as string ?? ViewContext.RouteData.GetRequiredString("action");
+    int? id = (ViewData["id"]??"").ToString().AsInt();
 }
 <table class="table">
     <tr>
@@ -25,8 +27,10 @@
             <th>
                 @Html.ActionLink(
                     name,
-                    ViewContext.RouteData.GetRequiredString("action"),
-                    new { sortOrder = order, sortProperty = property.Name }
+                    action,
+                    controller,
+                    new { sortOrder = order, sortProperty = property.Name, id=id },
+                    null
                 )
             </th>
         }

@@ -19,7 +19,6 @@ namespace ClassLibrary.Entities
 
         public Weapon()
         {
-
         }
         public Weapon(int lvl)
         {
@@ -31,9 +30,9 @@ namespace ClassLibrary.Entities
             Name = weapon.Name;
             if(Lvl < lvl)
             {
-                Name += $" +{Lvl-lvl}";
+                Name += $" +{lvl - Lvl}";
             }
-            Upgrade(Lvl-lvl);
+            Upgrade(lvl - Lvl);
         }
 
         public void Upgrade(int lvlsUp)

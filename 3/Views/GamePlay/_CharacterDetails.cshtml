@@ -1,5 +1,12 @@
 ﻿@model ClassLibrary.Entities.Hero
-
+@{
+    string aHP = (Model.AHP.ToString().AsDecimal() / Model.MHP.ToString().AsDecimal() * 100).ToString();
+    string aMP = (Model.AMP.ToString().AsDecimal() / Model.MMP.ToString().AsDecimal() * 100).ToString();
+    string exp = (Model.Exp.ToString().AsDecimal() / Model.ExpToLvlUp.ToString().AsDecimal() * 100).ToString();
+    aHP = aHP.Substring(0, Math.Min(aHP.Length, 4));
+    aMP = aMP.Substring(0, Math.Min(aMP.Length, 4));
+    exp = exp.Substring(0, Math.Min(exp.Length, 4));
+}
 <div>
     <dl class="dl-horizontal">
 
@@ -12,22 +19,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AHP)
-        </dt>
-
-        <dd id="Hero_AHP_MHP">
-            @Html.DisplayFor(model => model.AHP)/@Html.DisplayFor(model => model.MHP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AMP)
-        </dt>
-
-        <dd id="Hero_AMP_MMP">
-            @Html.DisplayFor(model => model.AMP)/@Html.DisplayFor(model => model.MMP)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Lvl)
         </dt>
 
@@ -36,11 +27,41 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.AHP)
+        </dt>
+
+        <dd id="Hero_AHP_MHP">
+            <div class="progress">
+                <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width:@aHP%"></div>
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AMP)
+        </dt>
+
+        <dd id="Hero_AMP_MMP">
+            <div class="progress">
+                <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:@aMP%"></div>
+            </div>
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Exp)
         </dt>
 
-        <dd  id="Hero_Exp_ExpToLvlUp">
-            @Html.DisplayFor(model => model.Exp)/@Html.DisplayFor(model => model.ExpToLvlUp)
+        <dd id="Hero_Exp_ExpToLvlUp">
+            <div class="progress">
+                <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" style="width:@exp%"></div>
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gold)
+        </dt>
+
+        <dd id="Hero_Gold">
+            @Html.DisplayFor(model => model.Gold)
         </dd>
 
         <dt>

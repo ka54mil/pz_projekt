@@ -60,6 +60,7 @@
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="Entities\Weapon.cs" />
     <Compile Include="Entities\World.cs" />
+    <Compile Include="Exceptions\InvalidActionException.cs" />
     <Compile Include="Generators\ItemGenerator.cs" />
     <Compile Include="Generators\LocationGenerator.cs" />
     <Compile Include="Generators\MonsterGenerator.cs" />
@@ -73,6 +74,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

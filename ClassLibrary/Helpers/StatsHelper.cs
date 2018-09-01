@@ -15,7 +15,7 @@ namespace ClassLibrary.Helpers
 
         public static int GetRecalculatedStatValue(int dividor, int currentValue, int previousValue)
         {
-            return (currentValue + previousValue) / dividor - (currentValue + previousValue) / dividor;
+            return previousValue==0?0:(currentValue + dividor-1) / dividor - (previousValue + dividor-1) / dividor;
         }
     }
 }
