@@ -44,7 +44,7 @@ namespace ClassLibrary.Entities
                 UpgradeCost += Lvl * Lvl + 3;
             }
             MinDmg += lvlsUp;
-            MaxDmg += Lvl / 3 - prevLvl / 3;
+            MaxDmg = MinDmg + Lvl / 3 +1;
         }
     }
 }

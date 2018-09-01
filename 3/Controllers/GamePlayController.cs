@@ -95,7 +95,6 @@ namespace _3.Controllers
         {
             Hero hero = Db.Hero.Find(heroId);
             Gameplay gameplay = RedisContext.GetFromRedis<Gameplay>($"gameplay-{heroId}") ?? new Gameplay(hero);
-            if (hero.CreatedAt != gameplay.Player.CreatedAt) gameplay = new Gameplay(hero);
             JsonResult jsonResult = new JsonResult();
             GameplayModel gameplayModel;
             gameplay.Player = hero;

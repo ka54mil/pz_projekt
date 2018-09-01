@@ -76,6 +76,7 @@ namespace ClassLibrary.Entities
             if (IsWeapongUpgradeble())
             {
                 Gold -= Weapon.UpgradeCost;
+                Weapon.Upgrade(1);
                 WeaponLvl = Weapon.Lvl;
                 return true;
             }
