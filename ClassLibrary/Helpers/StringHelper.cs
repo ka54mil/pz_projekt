@@ -28,9 +28,20 @@ namespace ClassLibrary.Helpers
                                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                             });
         }
+
         public static T DeserializeObject<T>(string toDeserialize)
         {
             return JsonConvert.DeserializeObject<T>(toDeserialize);
+        }
+
+        public static string ReplaceFirst(this string str, string search, string replace)
+        {
+            int pos = str.IndexOf(search);
+            if (pos < 0)
+            {
+                return str;
+            }
+            return str.Substring(0, pos) + replace + str.Substring(pos + search.Length);
         }
     }
 }

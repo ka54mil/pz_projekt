@@ -11,6 +11,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Speech.Synthesis;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace _3.Controllers
@@ -94,7 +96,7 @@ namespace _3.Controllers
         public JsonResult ExecuteAction(String action, int heroId)
         {
             Hero hero = Db.Hero.Find(heroId);
-            Gameplay gameplay = RedisContext.GetFromRedis<Gameplay>($"gameplay-{heroId}") ?? new Gameplay(hero);
+            Gameplay gameplay = RedisContext.GetByKey<Gameplay>($"gamesave1-{heroId}") ?? new Gameplay(hero);
             JsonResult jsonResult = new JsonResult();
             GameplayModel gameplayModel;
             gameplay.Player = hero;
@@ -107,7 +109,7 @@ namespace _3.Controllers
                     result.AddRange(gameplay.Monsters.Select(m => $"You have been attacked by {m.Name}"));
                 }
                 gameplayModel = new GameplayModel(hero, result.ToArray());
-                if (!RedisContext.SaveToRedis($"gameplay-{gameplay.Player.ID}", gameplay))
+                if (!RedisContext.Save($"gamesave1-{gameplay.Player.ID}", gameplay))
                 {
                     gameplayModel.Messages = new String[] { "There was an error while saving game." };
                 }

@@ -83,10 +83,6 @@ namespace ClassLibrary.Entities
         [Range(1, maxValue, ErrorMessage = "Race can not be unknown")]
         public Race Race { get; set; }
 
-        [Range(1, maxValue, ErrorMessage = "Only positive number allowed")]
-        [Display(Name = "Max pockets")]
-        public int MaxPockets { get; set; }
-
         [Range(0, maxValue, ErrorMessage = "Only positive number allowed")]
         [Display(Name = "Experience to level up")]
         public int ExpToLvlUp { get; set; }
@@ -95,8 +91,6 @@ namespace ClassLibrary.Entities
         public int Gold { get; set; }
 
         public virtual ICollection<Effect> Effects { get; set; }
-
-        public virtual ICollection<Pocket> Pockets { get; set; }
 
         public virtual void InitializeStats()
         {
@@ -109,7 +103,6 @@ namespace ClassLibrary.Entities
             Int = 1;
             Spd = 1;
             Sta = 1;
-            MaxPockets = 10;
             MinDmg = 1;
             MaxDmg = MinDmg;
             MHP = 1;

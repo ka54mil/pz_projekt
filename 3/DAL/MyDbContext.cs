@@ -1,4 +1,5 @@
 ﻿using ClassLibrary.Entities;
+using ClassLibrary.Entities.Items;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +14,7 @@ namespace _3.DAL
     {
         public DbSet<Profile> Profile { get; set; }
         public DbSet<Item> Item { get; set; }
+        public DbSet<ItemInfo> ItemInfo { get; set; }
         public DbSet<Pocket> Pocket { get; set; }
         public DbSet<Hero> Hero { get; set; }
         public DbSet<Effect> Effect { get; set; }
@@ -25,6 +27,7 @@ namespace _3.DAL
             modelBuilder.Entity<Hero>()
                 .Property(h => h.Name)
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute { IsUnique = true }));
+
             base.OnModelCreating(modelBuilder);
         }
     }

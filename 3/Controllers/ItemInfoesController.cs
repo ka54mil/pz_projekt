@@ -6,117 +6,123 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ClassLibrary.Entities;
+using ClassLibrary.Entities.Items;
 using _3.DAL;
 
 namespace _3.Controllers
 {
-    //[Authorize(Roles = "Admin")]
-    public class ItemsController : DefaultController
+    public class ItemInfoesController : Controller
     {
+        private MyDbContext db = new MyDbContext();
 
-        // GET: Items
+        // GET: ItemInfoes
         public ActionResult Index()
         {
-            return View(Db.Item.ToList());
+            return View(db.ItemInfo.ToList());
         }
 
-        // GET: Items/Details/5
+        // GET: ItemInfoes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = Db.Item.Find(id);
-            if (item == null)
+            ItemInfo itemInfo = db.ItemInfo.Find(id);
+            if (itemInfo == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ForbiddenFields = new string[] { };
-            ViewBag.Controller = "Item";
-            return View(item);
+            return View(itemInfo);
         }
 
-        // GET: Items/Create
+        // GET: ItemInfoes/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Items/Create
+        // POST: ItemInfoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name")] Item item)
+        public ActionResult Create([Bind(Include = "ID,HPModifier,Size,Name,Description,DropChance,MaxDropCount")] ItemInfo itemInfo)
         {
             if (ModelState.IsValid)
             {
-                Db.Item.Add(item);
-                Db.SaveChanges();
+                db.ItemInfo.Add(itemInfo);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(item);
+            return View(itemInfo);
         }
 
-        // GET: Items/Edit/5
+        // GET: ItemInfoes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = Db.Item.Find(id);
-            if (item == null)
+            ItemInfo itemInfo = db.ItemInfo.Find(id);
+            if (itemInfo == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            return View(itemInfo);
         }
 
-        // POST: Items/Edit/5
+        // POST: ItemInfoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name")] Item item)
+        public ActionResult Edit([Bind(Include = "ID,HPModifier,Size,Name,Description,DropChance,MaxDropCount")] ItemInfo itemInfo)
         {
             if (ModelState.IsValid)
             {
-                Db.Entry(item).State = EntityState.Modified;
-                Db.SaveChanges();
+                db.Entry(itemInfo).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(item);
+            return View(itemInfo);
         }
 
-        // GET: Items/Delete/5
+        // GET: ItemInfoes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = Db.Item.Find(id);
-            if (item == null)
+            ItemInfo itemInfo = db.ItemInfo.Find(id);
+            if (itemInfo == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            return View(itemInfo);
         }
 
-        // POST: Items/Delete/5
+        // POST: ItemInfoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Item item = Db.Item.Find(id);
-            Db.Item.Remove(item);
-            Db.SaveChanges();
+            ItemInfo itemInfo = db.ItemInfo.Find(id);
+            db.ItemInfo.Remove(itemInfo);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
-        
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

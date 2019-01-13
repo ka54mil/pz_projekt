@@ -8,10 +8,8 @@ namespace ClassLibrary.Entities
 {
     public class Pocket : Entity
     {
-        public static int MaxPocketSize = 20;
+        public static int MaxPocketSize = 10;
         public int ID { get; set; }
-        [Required]
-        public int Quantity { get; set; }
         [Required]
         public int ItemID { get; set; }
         [Required]

@@ -22,6 +22,9 @@ namespace ClassLibrary.Entities
 
         public Gameplay()
         {
+            Monsters = new List<Monster>();
+            World = WorldGenerator.CreateWorld();
+            CurrentLocation = World.LocationAt(0, 0);
             OnPlayerDeath += PlayerDeath;
         }
         public Gameplay(Hero player)
@@ -35,8 +38,7 @@ namespace ClassLibrary.Entities
 
         public Monster GetMonsterByName(string name)
         {
-            name = StringHelper.ToUppercaseFirst(name);
-            return Monsters.Where(e => e.Name.Equals(name)).FirstOrDefault() ?? Monsters.FirstOrDefault();
+            return Monsters.Where(e => e.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault() ?? Monsters.FirstOrDefault();
         }
 
         private void PlayerDeath()

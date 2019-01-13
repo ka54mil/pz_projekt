@@ -14,6 +14,7 @@ namespace ClassLibrary.Entities
     {
         public int UpgradeCost { get; set; }
         public int MinDmg { get; set; }
+        public string Name { get; set; }
         public int MaxDmg { get; set; }
         public int Lvl { get; set; }
 

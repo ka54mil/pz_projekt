@@ -7,6 +7,8 @@ using _3.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ClassLibrary.Entities;
+using ClassLibrary.Entities.Items;
+using ClassLibrary.Entities.Items.Food;
 
 namespace _3.DAL
 {
@@ -28,6 +30,7 @@ namespace _3.DAL
             userManager.Create(user, password);
             userManager.AddToRole(user.Id, "Admin");
             context.Profile.Add(new Profile { UserName = user.UserName });
+            context.ItemInfo.Add(new Meat());
             context.SaveChanges();
             base.Seed(context);
         }

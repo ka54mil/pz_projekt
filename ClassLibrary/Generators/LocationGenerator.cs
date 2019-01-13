@@ -12,7 +12,7 @@ namespace ClassLibrary.Generators
         internal static Location[] locationTemplates = new Location[] {
                 new Location {
                     Name = "Plain field",
-                    Description = "Full of mice and rabbits",
+                    Description = "Full of mice and rabbits.",
                     Monsters = MonsterGenerator.CreateMonsterList(LocationType.Plain_field),
                     LocationType = LocationType.Plain_field,
                     UnlockedByLocationTypes = new List<LocationType>{LocationType.Unknown},
@@ -20,7 +20,7 @@ namespace ClassLibrary.Generators
                 },
                 new Location{
                     Name = "Forest",
-                    Description = "You can hear wolves and bears",
+                    Description = "You can hear wolves and bears.",
                     Monsters = MonsterGenerator.CreateMonsterList(LocationType.Forest),
                     LocationType = LocationType.Forest,
                     UnlockedByLocationTypes = new List<LocationType>{LocationType.Plain_field},
@@ -28,7 +28,7 @@ namespace ClassLibrary.Generators
                 },
                 new Location{
                     Name = "Mountain",
-                    Description = "Be aware of snakes",
+                    Description = "Be aware of snakes.",
                     Monsters = MonsterGenerator.CreateMonsterList(LocationType.Mountain),
                     LocationType = LocationType.Mountain,
                     UnlockedByLocationTypes = new List<LocationType>{LocationType.Forest},

@@ -36,15 +36,15 @@
             </div>
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.AMP)
         </dt>
 
         <dd id="Hero_AMP_MMP">
             <div class="progress">
-                <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:@aMP%"></div>
+                <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width:@aMP%"></div>
             </div>
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Exp)
@@ -112,12 +112,12 @@
             @Html.DisplayFor(model => model.MinDmg) - @Html.DisplayFor(model => model.MaxDmg)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.PhysRes)
         </dt>
 
         <dd id="Hero_PhysRes">
             @Html.DisplayFor(model => model.PhysRes)
-        </dd>
+        </dd>*@
     </dl>
 </div>

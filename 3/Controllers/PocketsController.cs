@@ -11,7 +11,7 @@ using _3.DAL;
 
 namespace _3.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class PocketsController : DefaultController
     {
         // GET: Pockets

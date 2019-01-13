@@ -21,12 +21,12 @@ namespace ClassLibrary.Entities
             return 0 >= AHP;
         }
 
-        public void ChangeHealth(int health)
+        public void ChangeAHP(int health)
         {
             AHP = health + AHP < MHP ? health + AHP : MHP;
         }
         
-        public void ChangeMana(int mana)
+        public void ChangeAMP(int mana)
         {
             AMP = mana + AMP < MMP ? mana + AMP : MMP;
         }
@@ -58,7 +58,7 @@ namespace ClassLibrary.Entities
         {
             dmg -= PhysRes;
             if (dmg < 1) dmg = 1;
-            ChangeHealth(-dmg);
+            ChangeAHP(-dmg);
             return dmg;
         }
 

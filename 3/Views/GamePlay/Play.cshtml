@@ -1,5 +1,5 @@
 ﻿@model ClassLibrary.Entities.Hero
-    
+
 @Html.HiddenFor(model => model.ID)
 <div class="row">
     <div class="col-lg-4 mt-2 pr-0 col-md-5">
@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-12">
-                        <input class="shadow-none type-action" id="type-action-input" type="text" placeholder="Type your action ..." aria-label="Action input" />
+                        <input class="shadow-none type-action" tabindex="10000" id="type-action-input" type="text" placeholder="Type your action ..." aria-label="Action input" />
                     </div>
                 </div>
             </div>
@@ -24,7 +24,18 @@
     </div>
     <div class="col-lg-3 mt-2 pr-0">
         <div class="card bg-secondary card-default h-100">
-            <div class="card-body" style="height:77vh;overflow-y: scroll;">Equipment</div>
+            <div class="card-body" style="height:77vh;overflow-y: scroll;">
+                <div class="col-12">Equipment</div>
+                <div class="row" id="items-container">
+                    @foreach (var pocket in Model.Pockets)
+                    {
+                        <div class="col-12" title="@pocket.Item.ItemInfo.Description">
+                            @pocket.Item.Quantity @pocket.Item.ItemInfo.Name
+                        </div>
+                    }
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>

@@ -49,13 +49,19 @@
     <Compile Include="Entities\Being.cs" />
     <Compile Include="Entities\Effect.cs" />
     <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\Food.cs" />
+    <Compile Include="Entities\Items\FoodInfo.cs" />
+    <Compile Include="Entities\Items\Food\Meat.cs" />
+    <Compile Include="Entities\Items\ItemInfo.cs" />
     <Compile Include="Entities\Gameplay.cs" />
     <Compile Include="Entities\GameplayActions.cs" />
     <Compile Include="Entities\Hero.cs" />
+    <Compile Include="Entities\IConsumable.cs" />
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Location.cs" />
     <Compile Include="Entities\Monster.cs" />
+    <Compile Include="Entities\Monsters\Goat.cs" />
+    <Compile Include="Entities\Monsters\Rabbit.cs" />
+    <Compile Include="Entities\Monsters\Mouse.cs" />
     <Compile Include="Entities\Pocket.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="Entities\Weapon.cs" />
@@ -68,7 +74,6 @@
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Helpers\StatsHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Entities\IDroppable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

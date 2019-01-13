@@ -1,4 +1,24 @@
 ﻿$(document).ready(function () {
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+    var recognition = new SpeechRecognition();
+    var synth = window.speechSynthesis;
+    var utterance = new SpeechSynthesisUtterance();
+    //recognition.continuous = false;
+    recognition.lang = 'en-us';
+    recognition.interimresults = false;
+    recognition.maxalternatives = 1;
+    recognition.start();
+
+    recognition.onresult = function (event) {
+        $('#type-action-input').val(event.results[0][0].transcript);
+        var keyevent = $.Event("keypress");
+        keyevent.which = 13;
+        $('#type-action-input').trigger(keyevent);
+    };
+
+    recognition.onend = function () { if (!synth.speaking) recognition.start(); };
+
     function updatePlayerData(player) {
         $.each(player, function (i, e) {
             $('#Hero_' + i).html(e);
@@ -7,26 +27,60 @@
         $('#Hero_AHP_MHP').find('.progress-bar').width(player.AHP / player.MHP * 100 + '%');
         $('#Hero_AMP_MMP').find('.progress-bar').width(player.AMP / player.MMP * 100 + '%');
         $('#Hero_MinDmg_MaxDmg').html(player.MinDmg + ' - ' + player.MaxDmg);
+        let items = '';
+        $.each(player.Pockets, function (i, e) {
+            items += '<div class="col-12" tittle="'+e.Item.ItemInfo.Description+'">' + e.Item.Quantity + ' ' + e.Item.ItemInfo.Name + '</div>';
+        });
+        $('#items-container').html(items);
     }
+
+    function setupUtterance(msg) {
+        utterance = new SpeechSynthesisUtterance(msg);
+        utterance.onend = function () { recognition.start(); };
+        utterance.lang = "en-US";
+        synth.speaking = true;
+        utterance.onstart = function () {
+            recognition.stop();
+        };
+    }
+
+    function readMessage(msg) {
+        synth.cancel();
+        setupUtterance(msg);
+        synth.speak(utterance);
+    }
+
     $('#type-action-input').on('keypress', function (e) {
+
         if (e.which === 13) {
+
             $(this).attr('disabled', 'disabled');
-            $.post({
-                url: '/Gameplay/ExecuteAction',
-                data: {
-                    action: $(this).val(),
-                    heroId: $('#ID').val()
-                }
-            }).then(function (jsonResult) {
-                let result = JSON.parse(jsonResult);
-                $.each(result.Messages, function (i,e) {
-                    $('#events-container').append('<div class=\"col-12\">' + e + '</div>');
-                });
-                updatePlayerData(result.Player);
-            });
+            if ($(this).val().startsWith("repeat")) {
+                synth.cancel();
+                setupUtterance(utterance.text);
+                synth.speak(utterance);
+            } else {
+                $.post({
+                    url: '/Gameplay/ExecuteAction',
+                    data: {
+                        action: $(this).val(),
+                        heroId: $('#ID').val()
+                    }
+                }).then(function (jsonResult) {
+                    let result = JSON.parse(jsonResult);
+                    let msg = "";
+                    $.each(result.Messages, function (i, e) {
+                        $('#events-container').append('<div class=\"col-12\">' + e + '</div>');
+                        msg += e + "\r\n";
+                    });
+                    updatePlayerData(result.Player);
+                    readMessage(msg);
+                 });
+
+            }
             $(this).val('');
             $(this).removeAttr('disabled');
-            $(this).closest('.card-body').first().scrollTop = $(this).closest('.card-body').first().scrollHeight;
+            $('.card-body').scrollTop = $(this).closest('.card-body').first().scrollHeight;
         }
     });
 

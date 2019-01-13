@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ClassLibrary.Entities.Items;
+using ClassLibrary.Entities.Items.Food;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -10,9 +12,10 @@ namespace ClassLibrary.Entities
     public class Monster : Being
     {
         public int EncounterChance { get; set; }
+        public Item[] Items { get; set; }
         public Monster()
         {
-
+            Items = new Item[] { new Item { ItemInfoID = 1, ItemInfo = new Meat() } };
         }
 
         public override void InitializeStats()
@@ -22,7 +25,6 @@ namespace ClassLibrary.Entities
             Int += 1;
             Spd += 1;
             Sta += 1;
-            MaxPockets = 5;
             Lvl += 1;
             MinDmg += 1;
             MaxDmg += MinDmg;
@@ -33,11 +35,6 @@ namespace ClassLibrary.Entities
             MMP += Int;
             AHP = MHP;
             AMP = MMP;
-        }
-
-        public IDroppable[] GetDroppableItems()
-        {
-            return Pockets.Select(p => p.Item).OfType<IDroppable>().ToArray();
         }
     }
 }
