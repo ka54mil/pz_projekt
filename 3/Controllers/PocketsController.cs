@@ -8,17 +8,25 @@ using System.Web;
 using System.Web.Mvc;
 using ClassLibrary.Entities;
 using _3.DAL;
+using _3.Helpers;
+using PagedList;
 
 namespace _3.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class PocketsController : DefaultController
     {
+        readonly string[] ExcludedFields = new string[] { "Being", "Item" };
         // GET: Pockets
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, int? page, string sortProperty = "ID")
         {
             var pocket = Db.Pocket.Include(p => p.Being).Include(p => p.Item);
-            return View(pocket.ToList());
+            ViewBag.sortOrder = sortOrder;
+            ViewBag.sortProperty = sortProperty;
+            ViewBag.properties = typeof(Pocket).GetProperties().Where(p => Array.IndexOf(ExcludedFields, p.Name) == -1).ToList();
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(pocket.ToList().SortByProperty(sortOrder, sortProperty).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Pockets/Details/5

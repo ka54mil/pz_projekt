@@ -15,7 +15,7 @@ using PagedList;
 
 namespace _3.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class HeroesController : DefaultController
     {
         readonly string[] ExcludedFields = new string[] { "Profile", "Pockets", "Effects", "Weapon" };

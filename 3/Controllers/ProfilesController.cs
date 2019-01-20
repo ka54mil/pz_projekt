@@ -8,20 +8,28 @@ using System.Web;
 using System.Web.Mvc;
 using ClassLibrary.Entities;
 using _3.DAL;
+using _3.Helpers;
+using PagedList;
 
 namespace _3.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class ProfilesController : DefaultController
     {
+        readonly string[] ExcludedFields = new string[] { "Being" };
         // GET: Profiles
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, int? page, string sortProperty = "ID")
         {
-            return View(Db.Profile.ToList());
+            ViewBag.sortOrder = sortOrder;
+            ViewBag.sortProperty = sortProperty;
+            ViewBag.properties = typeof(Profile).GetProperties().Where(p => Array.IndexOf(ExcludedFields, p.Name) == -1).ToList();
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(Db.Profile.ToList().SortByProperty(sortOrder, sortProperty).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Profiles/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string sortOrder, string sortProperty = "ID")
         {
             if (id == null)
             {
@@ -34,6 +42,7 @@ namespace _3.Controllers
             }
             ViewBag.ForbiddenFields = new string[] { };
             ViewBag.Controller = "Profile";
+            profile.Heroes = profile.Heroes?.ToList().SortByProperty(sortOrder, sortProperty);
             return View(profile);
         }
 

@@ -8,17 +8,25 @@ using System.Web;
 using System.Web.Mvc;
 using ClassLibrary.Entities;
 using _3.DAL;
+using _3.Helpers;
+using PagedList;
 
 namespace _3.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class ItemsController : DefaultController
     {
+        readonly string[] ExcludedFields = new string[] { "ItemInfo"};
 
         // GET: Items
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, int? page, string sortProperty = "ID")
         {
-            return View(Db.Item.ToList());
+            ViewBag.sortOrder = sortOrder;
+            ViewBag.sortProperty = sortProperty;
+            ViewBag.properties = typeof(Item).GetProperties().Where(p => Array.IndexOf(ExcludedFields, p.Name) == -1).ToList();
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(Db.Item.ToList().SortByProperty(sortOrder, sortProperty).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Items/Details/5

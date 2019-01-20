@@ -431,7 +431,7 @@
     <Content Include="Views\Profiles\Create.cshtml" />
     <Content Include="Views\Profiles\Delete.cshtml" />
     <Content Include="Views\Profiles\Edit.cshtml" />
-    <Content Include="Views\Profiles\Index.cshtml" />
+    <Content Include="Views\Profiles\Index1.cshtml" />
     <Content Include="Views\Effects\Create.cshtml" />
     <Content Include="Views\Shared\Delete.cshtml" />
     <Content Include="Views\Effects\Edit.cshtml" />
@@ -439,11 +439,11 @@
     <Content Include="Views\Items\Create.cshtml" />
     <Content Include="Views\Items\Delete.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
-    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Items\Index1.cshtml" />
     <Content Include="Views\Pockets\Create.cshtml" />
     <Content Include="Views\Pockets\Delete.cshtml" />
     <Content Include="Views\Pockets\Edit.cshtml" />
-    <Content Include="Views\Pockets\Index.cshtml" />
+    <Content Include="Views\Pockets\Index1.cshtml" />
     <Content Include="Views\Shared\Details.cshtml" />
     <Content Include="Views\Shared\DetailsPartials\_PreDetails.cshtml" />
     <Content Include="Views\Shared\DetailsPartials\_PostDetails.cshtml" />
@@ -479,7 +479,7 @@
     <Content Include="Views\ItemInfoes\Delete.cshtml" />
     <Content Include="Views\ItemInfoes\Details.cshtml" />
     <Content Include="Views\ItemInfoes\Edit.cshtml" />
-    <Content Include="Views\ItemInfoes\Index.cshtml" />
+    <Content Include="Views\ItemInfoes\Index1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,22 +3,31 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using _3.Helpers;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ClassLibrary.Entities.Items;
 using _3.DAL;
+using PagedList;
 
 namespace _3.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ItemInfoesController : Controller
     {
         private MyDbContext db = new MyDbContext();
+        readonly string[] ExcludedFields = new string[] {};
 
         // GET: ItemInfoes
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, int? page, string sortProperty = "ID")
         {
-            return View(db.ItemInfo.ToList());
+            ViewBag.sortOrder = sortOrder;
+            ViewBag.sortProperty = sortProperty;
+            ViewBag.properties = typeof(ItemInfo).GetProperties().Where(p => Array.IndexOf(ExcludedFields, p.Name) == -1).ToList();
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(db.ItemInfo.ToList().SortByProperty(sortOrder, sortProperty).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: ItemInfoes/Details/5
