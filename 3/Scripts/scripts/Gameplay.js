@@ -4,7 +4,6 @@
     var recognition = new SpeechRecognition();
     var synth = window.speechSynthesis;
     var utterance = new SpeechSynthesisUtterance();
-    //recognition.continuous = false;
     recognition.lang = 'en-us';
     recognition.interimresults = false;
     recognition.maxalternatives = 1;
@@ -18,21 +17,6 @@
     };
 
     recognition.onend = function () { if (!synth.speaking) recognition.start(); };
-
-    function updatePlayerData(player) {
-        $.each(player, function (i, e) {
-            $('#Hero_' + i).html(e);
-        });
-        $('#Hero_Exp_ExpToLvlUp').find('.progress-bar').width(player.Exp/player.ExpToLvlUp*100+'%');
-        $('#Hero_AHP_MHP').find('.progress-bar').width(player.AHP / player.MHP * 100 + '%');
-        $('#Hero_AMP_MMP').find('.progress-bar').width(player.AMP / player.MMP * 100 + '%');
-        $('#Hero_MinDmg_MaxDmg').html(player.MinDmg + ' - ' + player.MaxDmg);
-        let items = '';
-        $.each(player.Pockets, function (i, e) {
-            items += '<div class="col-12" tittle="'+e.Item.ItemInfo.Description+'">' + e.Item.Quantity + ' ' + e.Item.ItemInfo.Name + '</div>';
-        });
-        $('#items-container').html(items);
-    }
 
     function setupUtterance(msg) {
         utterance = new SpeechSynthesisUtterance(msg);
@@ -48,6 +32,21 @@
         synth.cancel();
         setupUtterance(msg);
         synth.speak(utterance);
+    }
+
+    function updatePlayerData(player) {
+        $.each(player, function (i, e) {
+            $('#Hero_' + i).html(e);
+        });
+        $('#Hero_Exp_ExpToLvlUp').find('.progress-bar').width(player.Exp/player.ExpToLvlUp*100+'%');
+        $('#Hero_AHP_MHP').find('.progress-bar').width(player.AHP / player.MHP * 100 + '%');
+        $('#Hero_AMP_MMP').find('.progress-bar').width(player.AMP / player.MMP * 100 + '%');
+        $('#Hero_MinDmg_MaxDmg').html(player.MinDmg + ' - ' + player.MaxDmg);
+        let items = '';
+        $.each(player.Pockets, function (i, e) {
+            items += '<div class="col-12" tittle="'+e.Item.ItemInfo.Description+'">' + e.Item.Quantity + ' ' + e.Item.ItemInfo.Name + '</div>';
+        });
+        $('#items-container').html(items);
     }
 
     $('#type-action-input').on('keypress', function (e) {

@@ -64,7 +64,7 @@ namespace ClassLibrary.Entities
         public override int GetDmg()
         {
             Random r = new Random();
-            return 100;// r.Next(MinDmg, MaxDmg + 1);
+            return r.Next(MinDmg, MaxDmg + 1);
         }
 
         public override void InitializeStats()

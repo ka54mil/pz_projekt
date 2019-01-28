@@ -137,7 +137,7 @@ namespace _3.Controllers
             Hero hero = Db.Hero.Find(id);
             Db.Hero.Remove(hero);
             Db.SaveChanges();
-            RedisContext.Remove($"gamesave-{id}");
+            RedisContext.Remove($"hero-gamesave-{id}");
             return RedirectToAction("Index");
         }
     }

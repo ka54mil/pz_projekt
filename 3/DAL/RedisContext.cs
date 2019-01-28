@@ -11,7 +11,7 @@ namespace _3.DAL
 {
     public static class RedisContext
     {
-        private static readonly String redisHost = "redis://redistogo:0a2062f5a7c30916e06e96779e0dd0be@soapfish.redistogo.com:9957";
+        private const String redisHost = "redis://redistogo:0a2062f5a7c30916e06e96779e0dd0be@soapfish.redistogo.com:9957";
         private static RedisManagerPool redisManager = new RedisManagerPool(redisHost);
 
         public static bool Save(string key, Object value)

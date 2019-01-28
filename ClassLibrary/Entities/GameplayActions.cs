@@ -11,38 +11,49 @@ namespace ClassLibrary.Entities
 {
     public class GameplayActions : Entity
     {
-        private Dictionary<string, string> actions = new Dictionary<string, string>();
+        private static Dictionary<string, string[]> actions = new Dictionary<string, string[]>();
+        private static Dictionary<string, string[]> directions = new Dictionary<string, string[]>();
         private Gameplay gameplay;
         private List<string> Messages = new List<string>();
 
+        static GameplayActions()
+        {
+            actions.Add("Go", new string[] { "go", "run", "move", "walk" });
+            actions.Add("Attack", new string[] { "attack", "hit" });
+            actions.Add("Revive", new string[] { "revive", "suicude" });
+            actions.Add("Rest", new string[] { "rest" });
+            actions.Add("Use", new string[] { "eat", "consume", "use" });
+            actions.Add("Upgrade", new string[] { "upgrade", "enchance" });
+
+            directions.Add("north", new string[] { "north", "up", "top" });
+            directions.Add("south", new string[] { "north", "bottom", "down" });
+            directions.Add("east", new string[] { "east", "left" });
+            directions.Add("west", new string[] { "west", "right" });
+
+        }
         public GameplayActions(Gameplay gameplay)
         {
             this.gameplay = gameplay;
-            actions.Add("go", "Go");
-            actions.Add("run", "Go");
-            actions.Add("move", "Go");
-            actions.Add("walk", "Go");
-            actions.Add("attack", "Attack");
-            actions.Add("hit", "Attack");
-            actions.Add("revive", "Revive");
-            actions.Add("suicude", "Revive");
-            actions.Add("rest", "Rest");
-            actions.Add("eat", "Use");
-            actions.Add("consume", "Use");
-            actions.Add("use", "Use");
-            actions.Add("upgrade", "Upgrade");
         }
 
         public List<string> ExecuteAction(string action)
         {
             action = action.ToLower();
-            string key = actions.Keys.Where(k => action.StartsWith(k)).FirstOrDefault();
-            if (null == key || !actions.TryGetValue(key, out string methodName))
+            var result = actions
+                .Select(e => new {
+                    e.Key,
+                    Value = e.Value.Where(v => action.StartsWith(v)).FirstOrDefault()
+                })
+                .Where(r => r.Value != default(string) )
+                .FirstOrDefault();
+
+            if (null == result || result.Key == null)
                 throw new InvalidActionException($"Couldn't perform \"{action}\" action");
+            string methodName = result.Key;
 
 
             MethodInfo method = GetType().GetMethod(methodName, BindingFlags.NonPublic|BindingFlags.Instance);
-            action = action.ReplaceFirst(key, "");
+            action = action.ReplaceFirst(result.Value, "");
 
             List<Being> turnQueue = gameplay.Monsters.OfType<Being>().ToList();
             turnQueue.Add(gameplay.Player);
@@ -72,11 +83,6 @@ namespace ClassLibrary.Entities
         private void Go(string direction)
         {
             int x = gameplay.CurrentLocation.X, y = gameplay.CurrentLocation.Y;
-            Dictionary<string, string[]> directions = new Dictionary<string, string[]>();
-            directions.Add("north",new string[] { "north","up", "top"});
-            directions.Add("south",new string[] { "north", "bottom", "down" });
-            directions.Add("east", new string[] { "east", "left" });
-            directions.Add("west", new string[] { "west", "right" });
             string result = directions.Where(w => w.Value.Any(direction.Contains)).Select(w => w.Key).FirstOrDefault();
 
             switch (result)

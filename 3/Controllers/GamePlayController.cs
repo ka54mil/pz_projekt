@@ -88,6 +88,8 @@ namespace _3.Controllers
             {
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
+
+            RedisContext.Remove($"hero-gamesave-{heroId}");
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
@@ -96,7 +98,7 @@ namespace _3.Controllers
         public JsonResult ExecuteAction(String action, int heroId)
         {
             Hero hero = Db.Hero.Find(heroId);
-            Gameplay gameplay = RedisContext.GetByKey<Gameplay>($"gamesave1-{heroId}") ?? new Gameplay(hero);
+            Gameplay gameplay = RedisContext.GetByKey<Gameplay>($"hero-gamesave-{heroId}") ?? new Gameplay(hero);
             JsonResult jsonResult = new JsonResult();
             GameplayModel gameplayModel;
             gameplay.Player = hero;
@@ -109,12 +111,15 @@ namespace _3.Controllers
                     result.AddRange(gameplay.Monsters.Select(m => $"You have been attacked by {m.Name}"));
                 }
                 gameplayModel = new GameplayModel(hero, result.ToArray());
-                if (!RedisContext.Save($"gamesave1-{gameplay.Player.ID}", gameplay))
+                if (!RedisContext.Save($"hero-gamesave-{gameplay.Player.ID}", gameplay))
                 {
                     gameplayModel.Messages = new String[] { "There was an error while saving game." };
                 }
                 else
                 {
+                    hero.Pockets.ToList().ForEach(x => {
+                        Db.Entry(x.Item.ItemInfo).State = EntityState.Modified;
+                    });
                     hero.LastPlayedAt = DateTime.UtcNow;
                     Db.Entry(hero).State = EntityState.Modified;
                     Db.SaveChanges();
